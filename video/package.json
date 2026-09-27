@@ -1,0 +1,27 @@
+{
+  "name": "veylon-auto-promo",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "remotion studio",
+    "render": "node render.mjs",
+    "music": "python3 music/compose.py",
+    "typecheck": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@remotion/cli": "^4.0.529",
+    "@remotion/media-utils": "^4.0.529",
+    "@remotion/transitions": "^4.0.529",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.529"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/react": "^18.3.31",
+    "typescript": "^5.9.3"
+  }
+}

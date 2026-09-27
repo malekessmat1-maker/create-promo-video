@@ -1,5 +1,5 @@
-
-video/
 video/node_modules
 video/.turbo
 video/out/
+video/public/audio/*.wav
+__pycache__/

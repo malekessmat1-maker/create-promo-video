@@ -1,0 +1,1134 @@
+{
+  "photos": {
+    "porsche": {
+      "src": "porsche-road.jpg",
+      "pos": "50% 60%",
+      "posP": "62% 50%"
+    },
+    "mclaren": {
+      "src": "mclaren.jpg",
+      "pos": "50% 60%",
+      "posP": "45% 50%"
+    },
+    "amgRed": {
+      "src": "amg-red.jpg",
+      "pos": "50% 65%",
+      "posP": "40% 50%"
+    },
+    "rangeRover": {
+      "src": "range-rover.jpg",
+      "pos": "50% 45%",
+      "posP": "50% 50%"
+    },
+    "amgGtr": {
+      "src": "amg-gtr.jpg",
+      "pos": "50% 55%",
+      "posP": "60% 50%"
+    },
+    "ferrari": {
+      "src": "ferrari-yellow.jpg",
+      "pos": "50% 55%",
+      "posP": "40% 50%"
+    },
+    "lambo": {
+      "src": "lambo-yellow.jpg",
+      "pos": "60% 60%",
+      "posP": "68% 50%"
+    },
+    "camaro": {
+      "src": "camaro-blue.jpg",
+      "pos": "50% 55%",
+      "posP": "72% 50%"
+    },
+    "r8": {
+      "src": "audi-r8.jpg",
+      "pos": "50% 60%",
+      "posP": "40% 50%"
+    },
+    "m4": {
+      "src": "bmw-m4-portrait.jpg",
+      "pos": "50% 58%",
+      "posP": "50% 50%"
+    },
+    "sedan": {
+      "src": "sedan-black.jpg",
+      "pos": "50% 55%",
+      "posP": "50% 50%"
+    },
+    "fiat": {
+      "src": "fiat-blue.jpg",
+      "pos": "50% 60%",
+      "posP": "52% 50%"
+    },
+    "suv": {
+      "src": "suv-desert.jpg",
+      "pos": "50% 60%",
+      "posP": "55% 50%"
+    },
+    "wash": {
+      "src": "detailing-wash.jpg",
+      "pos": "50% 50%",
+      "posP": "42% 50%"
+    },
+    "neon": {
+      "src": "merc-neon.jpg",
+      "pos": "50% 50%",
+      "posP": "50% 50%"
+    },
+    "garage": {
+      "src": "garage-camaro.jpg",
+      "pos": "50% 50%",
+      "posP": "68% 50%"
+    },
+    "m5": {
+      "src": "bmw-m5.jpg",
+      "pos": "50% 55%",
+      "posP": "55% 50%"
+    }
+  },
+  "blocks": {
+    "stats": {
+      "eyebrow": "The Veylon shortlist",
+      "title": [
+        "Fifteen studios.",
+        "Different standards."
+      ],
+      "items": [
+        {
+          "value": 15,
+          "label": "carefully selected Spanish studios"
+        },
+        {
+          "value": 5,
+          "label": "cities compared in one place"
+        },
+        {
+          "value": 3,
+          "label": "ways to protect and restore your car"
+        },
+        {
+          "value": 0,
+          "suffix": "€",
+          "label": "charged to compare or enquire"
+        }
+      ]
+    },
+    "filter": {
+      "eyebrow": "Filter by city and treatment",
+      "title": [
+        "No endless tabs.",
+        {
+          "text": "No choosing blind.",
+          "color": "#ff5a1f"
+        }
+      ],
+      "body": "Open any studio to see exactly what it does best: photos, services, pricing, hours and contact details."
+    },
+    "steps": {
+      "eyebrow": "Choose on evidence",
+      "title": [
+        "A faster, clearer way",
+        "to choose."
+      ],
+      "steps": [
+        {
+          "title": "Narrow it down",
+          "text": "Select your city and treatment. We remove the irrelevant options immediately."
+        },
+        {
+          "title": "Study the work",
+          "text": "Compare specialties, services and real finishes, not whichever studio bought the loudest ad."
+        },
+        {
+          "title": "Speak directly",
+          "text": "Contact the studio, explain the car and get the details you need before committing."
+        }
+      ]
+    },
+    "services": {
+      "eyebrow": "Protect & restore",
+      "items": [
+        {
+          "label": "PPF",
+          "photo": "amgGtr"
+        },
+        {
+          "label": "Ceramic",
+          "photo": "mclaren"
+        },
+        {
+          "label": "Detailing",
+          "photo": "wash"
+        },
+        {
+          "label": "Window tint",
+          "photo": "rangeRover"
+        },
+        {
+          "label": "Wrapping",
+          "photo": "lambo"
+        }
+      ]
+    },
+    "cities": {
+      "eyebrow": "Compare across Spain",
+      "cities": [
+        "Madrid",
+        "Barcelona",
+        "Marbella",
+        "Alicante",
+        "Valencia"
+      ],
+      "footer": "Five cities. One clean comparison."
+    },
+    "pillars": {
+      "eyebrow": "Not an agency retainer. A revenue system.",
+      "title": [
+        "We fix every place a customer",
+        "can choose you, or lose you."
+      ],
+      "steps": [
+        {
+          "title": "Look as premium as the work",
+          "text": "A sales experience that makes the quality visible, answers objections and earns the enquiry."
+        },
+        {
+          "title": "Reach owners ready to buy",
+          "text": "Campaigns built around expensive paint, real risk and clear outcomes, not boosted posts."
+        },
+        {
+          "title": "Own high-intent search",
+          "text": "When someone searches for PPF in your city, be one of the first credible options they find."
+        },
+        {
+          "title": "Stop losing hot leads",
+          "text": "Fast routing, cleaner qualification and follow-up, so serious buyers never die in an unread WhatsApp thread."
+        }
+      ]
+    },
+    "ownerCTA": {
+      "lines": [
+        "Do not gamble",
+        {
+          "text": "with the finish.",
+          "color": "#ff5a1f"
+        }
+      ],
+      "body": "Compare the shortlist and choose with confidence.",
+      "phoneLabel": "Call · WhatsApp",
+      "endLine": "Free for car owners · PPF · Ceramic · Detailing"
+    }
+  },
+  "films": {
+    "Luxury": {
+      "title": "For premium car owners",
+      "scenes": [
+        {
+          "type": "cold",
+          "dur": 120,
+          "energy": 1,
+          "props": {
+            "beats": [
+              {
+                "at": 8,
+                "lines": [
+                  "You chose it",
+                  "carefully."
+                ]
+              },
+              {
+                "at": 64,
+                "lines": [
+                  "Every line.",
+                  {
+                    "text": "Every finish.",
+                    "color": "#ff5a1f"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 1,
+          "props": {
+            "photo": "porsche",
+            "eyebrow": "Paint protection film",
+            "lines": [
+              "PPF can protect",
+              "your paint for years"
+            ],
+            "linesP": [
+              "PPF can protect",
+              "your paint",
+              "for years"
+            ]
+          }
+        },
+        {
+          "type": "scratch",
+          "dur": 120,
+          "energy": 0,
+          "props": {
+            "photo": "mclaren",
+            "hitAt": 26,
+            "lines": [
+              "or become an",
+              {
+                "text": "expensive mistake.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 1,
+          "props": {
+            "photo": "amgRed",
+            "eyebrow": "Choose on evidence",
+            "lines": [
+              "One careless installer",
+              "can ruin expensive paint."
+            ],
+            "linesP": [
+              "One careless",
+              "installer can ruin",
+              "expensive paint."
+            ]
+          }
+        },
+        {
+          "type": "logo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "tagline": "Protection, compared.",
+            "eyebrow": "The shortlist for serious car owners"
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "photo": "rangeRover",
+            "eyebrow": "Veylon Auto",
+            "lines": [
+              "Your car deserves better",
+              {
+                "text": "than the nearest shop.",
+                "color": "#ff5a1f"
+              }
+            ],
+            "linesP": [
+              "Your car deserves",
+              "better than",
+              {
+                "text": "the nearest shop.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "stats",
+          "dur": 180,
+          "energy": 3,
+          "props": {
+            "block": "stats",
+            "photo": "porsche"
+          }
+        },
+        {
+          "type": "filter",
+          "dur": 210,
+          "energy": 3,
+          "props": {
+            "block": "filter"
+          }
+        },
+        {
+          "type": "steps",
+          "dur": 240,
+          "energy": 3,
+          "props": {
+            "block": "steps",
+            "photo": "m5"
+          }
+        },
+        {
+          "type": "services",
+          "dur": 150,
+          "energy": 3,
+          "props": {
+            "block": "services"
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "photo": "amgGtr",
+            "eyebrow": "Don't take their word for it",
+            "lines": [
+              "Good protection",
+              {
+                "text": "disappears into the car.",
+                "color": "#ff5a1f"
+              }
+            ],
+            "linesP": [
+              "Good protection",
+              {
+                "text": "disappears",
+                "color": "#ff5a1f"
+              },
+              {
+                "text": "into the car.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "cta",
+          "dur": 300,
+          "energy": 2,
+          "props": {
+            "block": "ownerCTA",
+            "photo": "porsche"
+          }
+        }
+      ]
+    },
+    "Enthusiast": {
+      "title": "For performance-car enthusiasts",
+      "scenes": [
+        {
+          "type": "services",
+          "dur": 90,
+          "energy": 2,
+          "props": {
+            "eyebrow": "Your pride",
+            "items": [
+              {
+                "label": "Paint",
+                "photo": "ferrari"
+              },
+              {
+                "label": "Finish",
+                "photo": "lambo"
+              },
+              {
+                "label": "Detail",
+                "photo": "r8"
+              }
+            ]
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "photo": "ferrari",
+            "eyebrow": "Paint protection film",
+            "lines": [
+              "PPF can protect",
+              "your paint for years"
+            ],
+            "linesP": [
+              "PPF can protect",
+              "your paint",
+              "for years"
+            ]
+          }
+        },
+        {
+          "type": "scratch",
+          "dur": 120,
+          "energy": 0,
+          "props": {
+            "photo": "lambo",
+            "hitAt": 24,
+            "lines": [
+              "or become an",
+              {
+                "text": "expensive mistake.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "photo": "r8",
+            "eyebrow": "Choose on evidence",
+            "lines": [
+              "One careless installer",
+              "can ruin expensive paint."
+            ],
+            "linesP": [
+              "One careless",
+              "installer can ruin",
+              "expensive paint."
+            ]
+          }
+        },
+        {
+          "type": "cold",
+          "dur": 90,
+          "energy": 1,
+          "props": {
+            "beats": [
+              {
+                "at": 6,
+                "lines": [
+                  "Don't take",
+                  "their word for it."
+                ]
+              },
+              {
+                "at": 48,
+                "lines": [
+                  {
+                    "text": "Judge the finish.",
+                    "color": "#ff5a1f"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "logo",
+          "dur": 150,
+          "energy": 3,
+          "props": {
+            "tagline": "Protection, compared.",
+            "eyebrow": "The shortlist for serious car owners"
+          }
+        },
+        {
+          "type": "stats",
+          "dur": 180,
+          "energy": 3,
+          "props": {
+            "block": "stats",
+            "photo": "camaro"
+          }
+        },
+        {
+          "type": "cities",
+          "dur": 180,
+          "energy": 3,
+          "props": {
+            "block": "cities",
+            "photo": "camaro"
+          }
+        },
+        {
+          "type": "filter",
+          "dur": 210,
+          "energy": 3,
+          "props": {
+            "block": "filter"
+          }
+        },
+        {
+          "type": "services",
+          "dur": 150,
+          "energy": 3,
+          "props": {
+            "block": "services"
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "photo": "m4",
+            "eyebrow": "Real work shown",
+            "lines": [
+              "Good protection",
+              {
+                "text": "disappears into the car.",
+                "color": "#ff5a1f"
+              }
+            ],
+            "linesP": [
+              "Good protection",
+              {
+                "text": "disappears",
+                "color": "#ff5a1f"
+              },
+              {
+                "text": "into the car.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "cta",
+          "dur": 300,
+          "energy": 2,
+          "props": {
+            "block": "ownerCTA",
+            "photo": "r8"
+          }
+        }
+      ]
+    },
+    "Everyday": {
+      "title": "For everyday drivers and families",
+      "scenes": [
+        {
+          "type": "cold",
+          "dur": 120,
+          "energy": 1,
+          "props": {
+            "beats": [
+              {
+                "at": 8,
+                "lines": [
+                  "Protect the car."
+                ]
+              },
+              {
+                "at": 60,
+                "lines": [
+                  {
+                    "text": "Skip the guesswork.",
+                    "color": "#ff5a1f"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 1,
+          "props": {
+            "photo": "sedan",
+            "eyebrow": "The car you rely on",
+            "lines": [
+              "Your car deserves better",
+              {
+                "text": "than the nearest shop.",
+                "color": "#ff5a1f"
+              }
+            ],
+            "linesP": [
+              "Your car deserves",
+              "better than",
+              {
+                "text": "the nearest shop.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "scratch",
+          "dur": 150,
+          "energy": 0,
+          "props": {
+            "photo": "fiat",
+            "hitAt": 30,
+            "eyebrow": "PPF can protect your paint for years",
+            "lines": [
+              "or become an",
+              {
+                "text": "expensive mistake.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "logo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "tagline": "Protection, compared.",
+            "eyebrow": "Free for car owners"
+          }
+        },
+        {
+          "type": "bignumber",
+          "dur": 180,
+          "energy": 2,
+          "props": {
+            "eyebrow": "Free for car owners",
+            "value": 0,
+            "suffix": "€",
+            "label": "charged to compare or enquire.",
+            "body": "Compare trusted PPF, ceramic coating and detailing specialists across Spain.",
+            "photo": "suv"
+          }
+        },
+        {
+          "type": "steps",
+          "dur": 240,
+          "energy": 3,
+          "props": {
+            "block": "steps",
+            "photo": "sedan"
+          }
+        },
+        {
+          "type": "filter",
+          "dur": 210,
+          "energy": 3,
+          "props": {
+            "block": "filter"
+          }
+        },
+        {
+          "type": "stats",
+          "dur": 180,
+          "energy": 3,
+          "props": {
+            "block": "stats",
+            "photo": "suv"
+          }
+        },
+        {
+          "type": "services",
+          "dur": 150,
+          "energy": 3,
+          "props": {
+            "block": "services"
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "photo": "m5",
+            "eyebrow": "Real work shown",
+            "lines": [
+              "See the work.",
+              {
+                "text": "Then trust someone with the car.",
+                "color": "#ff5a1f"
+              }
+            ],
+            "linesP": [
+              "See the work.",
+              {
+                "text": "Then trust someone",
+                "color": "#ff5a1f"
+              },
+              {
+                "text": "with the car.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "cta",
+          "dur": 300,
+          "energy": 2,
+          "props": {
+            "block": "ownerCTA",
+            "photo": "sedan"
+          }
+        }
+      ]
+    },
+    "Business": {
+      "title": "For PPF, ceramic and detailing businesses",
+      "scenes": [
+        {
+          "type": "cold",
+          "dur": 150,
+          "energy": 1,
+          "props": {
+            "eyebrow": "For PPF businesses",
+            "beats": [
+              {
+                "at": 8,
+                "lines": [
+                  "Most PPF businesses",
+                  "do premium work"
+                ],
+                "linesP": [
+                  "Most PPF",
+                  "businesses do",
+                  "premium work"
+                ]
+              },
+              {
+                "at": 76,
+                "lines": [
+                  "and market it",
+                  {
+                    "text": "like a commodity.",
+                    "color": "#ff5a1f"
+                  }
+                ],
+                "linesP": [
+                  "and market it",
+                  "like a",
+                  {
+                    "text": "commodity.",
+                    "color": "#ff5a1f"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 1,
+          "props": {
+            "photo": "wash",
+            "eyebrow": "The growth system behind the studios",
+            "lines": [
+              "Great work should make you",
+              {
+                "text": "the obvious choice.",
+                "color": "#ff5a1f"
+              }
+            ],
+            "linesP": [
+              "Great work",
+              "should make you",
+              {
+                "text": "the obvious choice.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "bignumber",
+          "dur": 240,
+          "energy": 2,
+          "props": {
+            "eyebrow": "Results across four Spanish businesses",
+            "prefix": "€",
+            "value": 102,
+            "suffix": "K",
+            "label": "in monthly client revenue.",
+            "body": "The studio with the best acquisition system wins more often than the studio with the best camera.",
+            "photo": "neon"
+          }
+        },
+        {
+          "type": "logo",
+          "dur": 150,
+          "energy": 3,
+          "props": {
+            "tagline": "Protection marketplace · Growth partner",
+            "eyebrow": "Not an agency retainer. A revenue system."
+          }
+        },
+        {
+          "type": "pillars",
+          "dur": 330,
+          "energy": 3,
+          "props": {
+            "block": "pillars",
+            "photo": "garage"
+          }
+        },
+        {
+          "type": "beforeafter",
+          "dur": 210,
+          "energy": 3,
+          "props": {
+            "eyebrow": "Your digital showroom",
+            "title": [
+              "Look as premium",
+              {
+                "text": "as the work.",
+                "color": "#ff5a1f"
+              }
+            ],
+            "body": "If the work looks premium but the website does not, customers assume the work is not."
+          }
+        },
+        {
+          "type": "search",
+          "dur": 210,
+          "energy": 3,
+          "props": {
+            "eyebrow": "SEO + Google",
+            "title": [
+              "Own the search",
+              {
+                "text": "that books cars.",
+                "color": "#ff5a1f"
+              }
+            ],
+            "body": "Your competitor should not own the search that could have booked you.",
+            "query": "best PPF installer near me"
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "photo": "neon",
+            "eyebrow": "Spain proved the system",
+            "lines": [
+              {
+                "text": "Egypt is next.",
+                "color": "#ff5a1f"
+              }
+            ],
+            "body": "We are bringing the system behind €102K in monthly client revenue to a small number of ambitious PPF, ceramic and detailing businesses in Egypt."
+          }
+        },
+        {
+          "type": "cta",
+          "dur": 300,
+          "energy": 2,
+          "props": {
+            "photo": "amgGtr",
+            "eyebrow": "For PPF, ceramic & detailing businesses",
+            "lines": [
+              "Become the name",
+              {
+                "text": "car owners hear",
+                "color": "#ff5a1f"
+              }
+            ],
+            "body": "before they start comparing.",
+            "phoneLabel": "Call Egypt · WhatsApp",
+            "endLine": "Protection marketplace · Growth partner"
+          }
+        }
+      ]
+    },
+    "Master": {
+      "title": "Brand film for every audience",
+      "scenes": [
+        {
+          "type": "cold",
+          "dur": 120,
+          "energy": 1,
+          "props": {
+            "beats": [
+              {
+                "at": 8,
+                "lines": [
+                  "Your car deserves better"
+                ],
+                "linesP": [
+                  "Your car",
+                  "deserves better"
+                ]
+              },
+              {
+                "at": 60,
+                "lines": [
+                  {
+                    "text": "than the nearest shop.",
+                    "color": "#ff5a1f"
+                  }
+                ],
+                "linesP": [
+                  {
+                    "text": "than the",
+                    "color": "#ff5a1f"
+                  },
+                  {
+                    "text": "nearest shop.",
+                    "color": "#ff5a1f"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 1,
+          "props": {
+            "photo": "porsche",
+            "eyebrow": "Paint protection film",
+            "lines": [
+              "PPF can protect",
+              "your paint for years"
+            ],
+            "linesP": [
+              "PPF can protect",
+              "your paint",
+              "for years"
+            ]
+          }
+        },
+        {
+          "type": "scratch",
+          "dur": 120,
+          "energy": 0,
+          "props": {
+            "photo": "mclaren",
+            "hitAt": 26,
+            "lines": [
+              "or become an",
+              {
+                "text": "expensive mistake.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 1,
+          "props": {
+            "photo": "amgRed",
+            "eyebrow": "Choose on evidence",
+            "lines": [
+              "One careless installer",
+              "can ruin expensive paint."
+            ],
+            "linesP": [
+              "One careless",
+              "installer can ruin",
+              "expensive paint."
+            ]
+          }
+        },
+        {
+          "type": "logo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "tagline": "Protection, compared.",
+            "eyebrow": "The shortlist for serious car owners"
+          }
+        },
+        {
+          "type": "stats",
+          "dur": 180,
+          "energy": 3,
+          "props": {
+            "block": "stats",
+            "photo": "porsche"
+          }
+        },
+        {
+          "type": "filter",
+          "dur": 210,
+          "energy": 3,
+          "props": {
+            "block": "filter"
+          }
+        },
+        {
+          "type": "steps",
+          "dur": 240,
+          "energy": 3,
+          "props": {
+            "block": "steps",
+            "photo": "m5"
+          }
+        },
+        {
+          "type": "services",
+          "dur": 150,
+          "energy": 3,
+          "props": {
+            "block": "services"
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "photo": "wash",
+            "eyebrow": "For PPF businesses",
+            "lines": [
+              "Great work should make you",
+              {
+                "text": "the obvious choice.",
+                "color": "#ff5a1f"
+              }
+            ],
+            "linesP": [
+              "Great work",
+              "should make you",
+              {
+                "text": "the obvious choice.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "bignumber",
+          "dur": 180,
+          "energy": 2,
+          "props": {
+            "eyebrow": "Results across four Spanish businesses",
+            "prefix": "€",
+            "value": 102,
+            "suffix": "K",
+            "label": "in monthly client revenue.",
+            "photo": "neon"
+          }
+        },
+        {
+          "type": "pillars",
+          "dur": 300,
+          "energy": 3,
+          "props": {
+            "block": "pillars",
+            "photo": "garage"
+          }
+        },
+        {
+          "type": "photo",
+          "dur": 150,
+          "energy": 2,
+          "props": {
+            "photo": "neon",
+            "eyebrow": "Spain proved the system",
+            "lines": [
+              {
+                "text": "Egypt is next.",
+                "color": "#ff5a1f"
+              }
+            ]
+          }
+        },
+        {
+          "type": "cta",
+          "dur": 300,
+          "energy": 2,
+          "props": {
+            "block": "ownerCTA",
+            "photo": "porsche",
+            "phoneLabel": "Call · WhatsApp",
+            "endLine": "Protection marketplace · Growth partner"
+          }
+        }
+      ]
+    }
+  }
+}
