@@ -224,6 +224,9 @@ def compose(name, film):
         if s['type'] == 'scratch':
             hit = s['props'].get('hitAt', 30) / FPS
             energy[int(round((t0 + hit) / BEAT)):b1] = 1
+        if s['type'] == 'siteHero':
+            rv = s['props'].get('revealAt', 60) / FPS
+            energy[b0:int(round((t0 + rv) / BEAT))] = 1
         t0 += dur
 
     def e_at(sec):
@@ -258,9 +261,10 @@ def compose(name, film):
             add(kick_env, at, np.exp(-t_(0.3) * 14))
             # offbeat hats
             add(drums, at + BEAT / 2, hat(level=1.0 if e >= 3 else 0.7))
-            # 8th-note bass pulse
-            for j in range(2):
-                add(bass, at + j * BEAT / 2, bass_note(root, BEAT / 2 + 0.05, 0.9 if j else 1.0))
+            # 8th-note bass pulse (16ths at full energy for drive)
+            steps = 4 if e >= 3 else 2
+            for j in range(steps):
+                add(bass, at + j * BEAT / steps, bass_note(root + (12 if (e >= 3 and j == 3) else 0), BEAT / steps + 0.04, 1.0 if j == 0 else 0.8))
         elif e >= 1:
             add(drums, at, tick(), 0.9 if beat_in_bar == 0 else 0.55)
             if beat_in_bar == 0:
@@ -308,6 +312,25 @@ def compose(name, film):
             for k_ in range(count):
                 add(fx, at + k_ * each - 0.3, whoosh(0.3), 0.6)
                 add(fx_verb, at + k_ * each, boom(0.25, 0.8), 0.6)
+        elif typ == 'siteHero':
+            rv = p.get('revealAt', 60) / FPS
+            add(fx, at, riser(rv), 0.55)
+            add(fx_verb, at + rv, boom(1.0, 2.4), 1.0)
+            url = 'veylonauto.vercel.app'
+            for c in range(len(url)):
+                add(fx, at + rv + (-4 + c * 30 / len(url)) / FPS, key_click(), 0.7)
+        elif typ == 'siteScroll':
+            n_stops = len(p.get('stops') or p.get('captions') or [0])
+            seg = int(s['dur'] / n_stops) / FPS
+            for k_ in range(n_stops):
+                add(fx, at + k_ * seg, whoosh(0.55, 1.1), 0.7)
+        elif typ == 'siteFilter':
+            for fr in (30, 58):
+                add(fx, at + fr / FPS, ui_click(), 1.0)
+        elif typ == 'siteProfile':
+            add(fx, at + 26 / FPS, ui_click(), 1.0)
+            add(fx, at + 28 / FPS, whoosh(0.5, 1.2), 0.8)
+            add(fx_verb, at + 30 / FPS, boom(0.3, 0.8), 0.6)
         elif typ == 'filter':
             for fr in (62, 108):
                 add(fx, at + fr / FPS, ui_click(), 1.0)
@@ -319,7 +342,7 @@ def compose(name, film):
             add(fx_verb, at + 58 / FPS, boom(0.35, 1.0), 0.6)
         elif typ == 'beforeafter':
             add(fx, at + 60 / FPS, whoosh(0.6, 1.2), 0.7)
-        if typ not in ('logo', 'scratch') and at > 0:
+        if typ not in ('logo', 'scratch', 'siteHero') and at > 0:
             add(fx, at - 0.35, whoosh(0.35), 0.35)
 
     # sidechain pads + bass under the kick

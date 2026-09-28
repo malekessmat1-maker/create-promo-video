@@ -6,6 +6,7 @@ import {PhotoSpec} from './components/ui';
 import {BigNumber, ColdOpen, LogoReveal, PhotoStatement, Scratch} from './scenes/TextScenes';
 import {BeforeAfter, CityRoll, FilterDemo, SearchDemo, Services, Stats, Steps} from './scenes/InfoScenes';
 import {CTA} from './scenes/CTA';
+import {SiteFilter, SiteHero, SitePan, SiteProfile, SiteScroll} from './scenes/SiteScenes';
 
 export type FilmName = keyof typeof data.films;
 type Scene = {type: string; dur: number; energy: number; props: Record<string, unknown>};
@@ -41,6 +42,11 @@ const components: Record<string, React.FC<any>> = {
   beforeafter: BeforeAfter,
   search: SearchDemo,
   cta: CTA,
+  siteHero: SiteHero,
+  siteScroll: SiteScroll,
+  siteFilter: SiteFilter,
+  siteProfile: SiteProfile,
+  sitePan: SitePan,
 };
 
 export const filmDuration = (name: FilmName) => (data.films[name].scenes as Scene[]).reduce((a, s) => a + s.dur, 0);

@@ -15,7 +15,7 @@ for (const id of ids.filter((i) => i.includes(filter))) {
   const film = data.films[id.split('-')[0]];
   let t = 0;
   for (const [i, s] of film.scenes.entries()) {
-    const frames = [t + Math.floor(s.dur * 0.75)];
+    const frames = (process.env.FRAMES ?? "0.75").split(",").map((p) => t + Math.floor(s.dur * Number(p)));
     for (const fr of frames) {
       const out = `${outDir}/${id}_${String(i + 1).padStart(2, '0')}_${s.type}_${fr}.jpg`;
       await renderStill({composition, serveUrl, output: out, frame: fr, imageFormat: 'jpeg', jpegQuality: 80, scale: 0.5});
