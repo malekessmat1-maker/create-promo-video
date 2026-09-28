@@ -108,6 +108,9 @@ const EndCard: React.FC<{phoneLabel: string; endLine?: string}> = ({phoneLabel, 
           <div style={{fontFamily: F.body, fontWeight: 500, fontSize: (portrait ? 28 : 24) * u, color: C.muted, letterSpacing: '0.04em', opacity: line, textAlign: 'center'}}>{endLine}</div>
         ) : null}
       </div>
+      <div style={{position: 'absolute', bottom: (portrait ? 150 : 40) * u, left: 0, right: 0, textAlign: 'center', fontFamily: F.body, fontSize: (portrait ? 18 : 16) * u, color: 'rgba(245,243,238,.42)', opacity: line}}>
+        Website screens are illustrative.
+      </div>
     </AbsoluteFill>
   );
 };

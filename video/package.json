@@ -22,7 +22,6 @@
   "private": true,
   "devDependencies": {
     "@types/react": "^18.3.31",
-    "playwright": "^1.56.1",
     "typescript": "^5.9.3"
   }
 }

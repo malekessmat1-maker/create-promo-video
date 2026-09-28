@@ -325,7 +325,7 @@ def compose(name, film):
             for k_ in range(n_stops):
                 add(fx, at + k_ * seg, whoosh(0.55, 1.1), 0.7)
         elif typ == 'siteFilter':
-            for fr in (30, 58):
+            for fr in (22, 40, 60, 78):
                 add(fx, at + fr / FPS, ui_click(), 1.0)
         elif typ == 'siteProfile':
             add(fx, at + 26 / FPS, ui_click(), 1.0)

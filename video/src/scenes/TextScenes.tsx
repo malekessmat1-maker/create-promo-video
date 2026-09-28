@@ -112,7 +112,7 @@ export const Scratch: React.FC<ScratchProps & {dur: number}> = ({photo, lines, l
     easing: Easing.out(Easing.quad),
   });
   const after = frame >= hitAt;
-  const shakeAmt = interpolate(frame, [hitAt, hitAt + 14], [14, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const shakeAmt = interpolate(frame, [hitAt, hitAt + 10], [6, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const shakeX = after ? Math.sin(frame * 2.7) * shakeAmt * u : 0;
   const shakeY = after ? Math.cos(frame * 3.3) * shakeAmt * 0.6 * u : 0;
   const gray = interpolate(frame, [hitAt, hitAt + 20], [0, 0.85], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
@@ -151,7 +151,7 @@ export const Scratch: React.FC<ScratchProps & {dur: number}> = ({photo, lines, l
         <path d={d} stroke={C.orange} strokeWidth={14 * u} fill="none" strokeLinecap="round" strokeLinejoin="round" filter="url(#scratchGlow)" strokeDasharray={len} strokeDashoffset={len * (1 - draw)} opacity={0.9} />
         <path d={d} stroke="#fff6ee" strokeWidth={3.5 * u} fill="none" strokeLinecap="round" strokeLinejoin="round" strokeDasharray={len} strokeDashoffset={len * (1 - draw)} />
       </svg>
-      <Flash at={hitAt} color={C.orange} peak={0.45} length={10} />
+      <Flash at={hitAt} color={C.orange} peak={0.22} length={10} />
       <Stage>
         <div style={{display: 'flex', flexDirection: 'column', gap: 26 * u}}>
           {eyebrow ? <Eyebrow text={eyebrow} size={(portrait ? 26 : 24) * u} delay={4} /> : null}

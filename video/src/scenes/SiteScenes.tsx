@@ -1,12 +1,14 @@
 import React from 'react';
-import {AbsoluteFill, Easing, Img, interpolate, Sequence, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Easing, interpolate, Sequence, useCurrentFrame} from 'remotion';
 import {C, CONTACT, F, useLayout} from '../theme';
-import {Eyebrow, Flash, Grain, LightSweep, LineReveal, LineSpec, Vignette} from '../components/ui';
+import {Eyebrow, Grain, LightSweep, LineReveal, LineSpec, Vignette} from '../components/ui';
+import {CARDS_ALL, CARDS_CAIRO_PPF, CITIES, GROWTH_STOPS, GrowthPage, L, MarketPage, MarketState, ProfileModal, SERVICES, cardRect, citySelY, profileRect, svcSelY} from '../site/SiteUI';
 
 /*
  * Website feature scenes. Everything inside the device is positioned in the
  * website's own CSS pixels (desktop viewport 1440×900, mobile 390×844), using
- * real captures of veylonauto.vercel.app, so cursor targets match the real UI.
+ * the Egypt rebuild of the Veylon site in src/site/SiteUI.tsx, so cursor
+ * targets land exactly on the UI they operate.
  */
 
 type Kind = 'desktop' | 'mobile';
@@ -138,7 +140,16 @@ const Device: React.FC<{cam: Cam; url?: string; typed?: number; children: React.
             background: C.paper,
           }}
         >
-          <div style={{position: 'absolute', left: 0, top: 0, width: VIEW[d.kind].w, height: VIEW[d.kind].h, transform: `scale(${d.k})`, transformOrigin: '0 0'}}>{children}</div>
+          <div style={{position: 'absolute', left: 0, top: 0, width: VIEW[d.kind].w, height: VIEW[d.kind].h, transform: `scale(${d.k})`, transformOrigin: '0 0', overflow: 'hidden'}}>
+            {d.portrait ? (
+              <>
+                <div style={{position: 'absolute', left: 0, top: STATUS_H, width: VIEW.mobile.w, height: VIEW.mobile.h - STATUS_H, overflow: 'hidden'}}>{children}</div>
+                <StatusBar />
+              </>
+            ) : (
+              children
+            )}
+          </div>
           <div style={{position: 'absolute', inset: 0, background: `linear-gradient(115deg, transparent ${40 + glare}%, rgba(255,255,255,.10) ${50 + glare}%, transparent ${60 + glare}%)`, pointerEvents: 'none'}} />
         </div>
         {d.portrait ? (
@@ -149,16 +160,25 @@ const Device: React.FC<{cam: Cam; url?: string; typed?: number; children: React.
   );
 };
 
-/** Full-viewport screenshot in CSS px. */
-const Shot: React.FC<{name: string; opacity?: number; clip?: string; scale?: number}> = ({name, opacity = 1, clip, scale = 1}) => {
-  const {kind} = useDevice();
-  return (
-    <Img
-      src={staticFile(`site/${kind === 'desktop' ? 'd' : 'm'}-${name}.jpg`)}
-      style={{position: 'absolute', left: 0, top: 0, width: VIEW[kind].w, height: VIEW[kind].h, opacity, clipPath: clip, transform: `scale(${scale})`}}
-    />
-  );
-};
+/** Phone status bar; mobile page content starts below it. */
+const STATUS_H = 50;
+const StatusBar: React.FC = () => (
+  <div style={{position: 'absolute', left: 0, top: 0, width: VIEW.mobile.w, height: STATUS_H, background: '#f5f3ee', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 30px 0 34px', fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 15, color: '#070707'}}>
+    <span>9:41</span>
+    <span style={{display: 'flex', gap: 6, alignItems: 'center'}}>
+      <svg width="17" height="11" viewBox="0 0 17 11">
+        {[0, 1, 2, 3].map((i) => (
+          <rect key={i} x={i * 4.5} y={8 - i * 2.6} width="3" height={3 + i * 2.6} rx="0.8" fill="#070707" />
+        ))}
+      </svg>
+      <svg width="25" height="12" viewBox="0 0 25 12">
+        <rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#070707" fill="none" opacity="0.5" />
+        <rect x="2.5" y="2.5" width="15" height="7" rx="1.5" fill="#070707" />
+        <rect x="22.5" y="4" width="2" height="4" rx="1" fill="#070707" opacity="0.5" />
+      </svg>
+    </span>
+  </div>
+);
 
 /** Pointer (desktop) or touch ripple (mobile), in CSS px. */
 const Pointer: React.FC<{x: number; y: number; clicks: number[]; show: number}> = ({x, y, clicks, show}) => {
@@ -250,26 +270,41 @@ const Frame: React.FC<{children: React.ReactNode; captions?: React.ReactNode}> =
   </AbsoluteFill>
 );
 
+/** The site page, scrolled. */
+const Page: React.FC<{scroll: number; st?: MarketState; growth?: boolean; blur?: number}> = ({scroll, st = DEFAULT_ST, growth, blur = 0}) => {
+  const {kind} = useDevice();
+  return (
+    <div style={{position: 'absolute', left: 0, top: 0, width: VIEW[kind].w, height: VIEW[kind].h, overflow: 'hidden', background: '#f5f3ee'}}>
+      <div style={{position: 'absolute', left: 0, top: 0, transform: `translateY(${-scroll}px)`, filter: blur > 0.3 ? `blur(${blur}px)` : undefined}}>
+        {growth ? <GrowthPage m={kind} /> : <MarketPage m={kind} st={st} />}
+      </div>
+    </div>
+  );
+};
+
+const DEFAULT_ST: MarketState = {city: 'All cities', service: 'All services', cards: CARDS_ALL};
+const CAIRO_ST: MarketState = {city: 'Cairo', service: 'PPF', cards: CARDS_CAIRO_PPF};
+
 /* ------------------------------------------------------------------ */
 /* Hero reveal: starts inside the site's own headline, pulls back.      */
 /* ------------------------------------------------------------------ */
-const HERO_FOCUS: Record<string, Record<Kind, [number, number, number]>> = {
+const HERO_FOCUS: Record<'market' | 'growth', Record<Kind, [number, number, number]>> = {
   // [cssX, cssY, zoom] framing each page's headline
-  hero: {desktop: [390, 420, 1.9], mobile: [160, 300, 2.3]},
-  'growth-hero': {desktop: [626, 360, 1.5], mobile: [198, 315, 1.8]},
+  market: {desktop: [400, 437, 1.9], mobile: [170, 294, 2.2]},
+  growth: {desktop: [570, 342, 1.9], mobile: [166, 293, 2.2]},
 };
 
-export type SiteHeroProps = {shot: 'hero' | 'growth-hero'; caption?: Caption; revealAt?: number};
+export type SiteHeroProps = {page?: 'market' | 'growth'; caption?: Caption; revealAt?: number};
 
-export const SiteHero: React.FC<SiteHeroProps & {dur: number}> = ({shot, caption, revealAt = 60, dur}) => {
+export const SiteHero: React.FC<SiteHeroProps & {dur: number}> = ({page = 'market', caption, revealAt = 60, dur}) => {
   const frame = useCurrentFrame();
   const d = useDevice();
   const focus = useFocus();
-  const [fx, fy, fz] = HERO_FOCUS[shot][d.kind];
+  const [fx, fy, fz] = HERO_FOCUS[page][d.kind];
   const start = focus(fx, fy, fz);
-  const drift = focus(fx + (d.portrait ? 0 : 60), fy + 20, fz * 1.04);
-  const wideA: Cam = d.portrait ? {x: 0, y: 250 * d.u, z: 1.14, rx: 10, ry: -8, rz: 1.5} : {x: 150 * d.u, y: -20 * d.u, z: 1.04, rx: 8, ry: -14, rz: 1};
-  const wideB: Cam = d.portrait ? {x: 0, y: 260 * d.u, z: 1.18, rx: 4, ry: -2, rz: 0} : {x: 190 * d.u, y: -30 * d.u, z: 1.1, rx: 4, ry: -8, rz: 0};
+  const drift = focus(fx + (d.portrait ? 0 : 40), fy + 16, fz * 1.03);
+  const wideA: Cam = d.portrait ? {x: 0, y: 250 * d.u, z: 1.14, rx: 8, ry: -6, rz: 1} : {x: 150 * d.u, y: -20 * d.u, z: 1.04, rx: 7, ry: -12, rz: 0.6};
+  const wideB: Cam = d.portrait ? {x: 0, y: 260 * d.u, z: 1.18, rx: 3, ry: -2, rz: 0} : {x: 190 * d.u, y: -30 * d.u, z: 1.1, rx: 3, ry: -7, rz: 0};
   const cam = frame < revealAt
     ? camAt(frame, [[0, start], [revealAt - 26, drift], [revealAt, wideA]], Easing.inOut(Easing.cubic))
     : camAt(frame, [[revealAt, wideA], [dur, wideB]], Easing.out(Easing.quad));
@@ -285,26 +320,19 @@ export const SiteHero: React.FC<SiteHeroProps & {dur: number}> = ({shot, caption
       }
     >
       <Device cam={cam} typed={typed}>
-        <Shot name={shot} />
+        <Page scroll={0} growth={page === 'growth'} />
       </Device>
-      <LightSweep start={revealAt - 6} duration={36} opacity={0.35} width={10} />
-      <Flash at={revealAt} color={C.orange} peak={0.18} length={10} />
+      <LightSweep start={revealAt - 6} duration={36} opacity={0.28} width={10} />
     </Frame>
   );
 };
 
 /* ------------------------------------------------------------------ */
-/* Scrolling through a full page with captions per stop.               */
+/* Scrolling through a page with captions per stop.                    */
 /* ------------------------------------------------------------------ */
-const SCROLL: Record<string, Record<Kind, {img: string; h: number; stops: number[]}>> = {
-  market: {
-    desktop: {img: 'd-market-full.jpg', h: 5200, stops: [1234, 2000, 3300]},
-    mobile: {img: 'm-market-full.jpg', h: 3600, stops: [1478, 2183, 2756]},
-  },
-  growth: {
-    desktop: {img: 'd-growth-full.jpg', h: 5399, stops: [300, 1180, 2380, 3345]},
-    mobile: {img: 'm-growth-full.jpg', h: 5825, stops: [500, 1400, 2905, 4184]},
-  },
+const SCROLL_STOPS: Record<'market' | 'growth', Record<Kind, number[]>> = {
+  market: {desktop: [L.desktop.studiosTop, 1640, 3500], mobile: [1470, 2110, 4170]},
+  growth: GROWTH_STOPS,
 };
 
 export type SiteScrollProps = {page: 'market' | 'growth'; captions: Caption[]; stops?: number[]};
@@ -312,34 +340,33 @@ export type SiteScrollProps = {page: 'market' | 'growth'; captions: Caption[]; s
 export const SiteScroll: React.FC<SiteScrollProps & {dur: number}> = ({page, captions, stops: pick, dur}) => {
   const frame = useCurrentFrame();
   const d = useDevice();
-  const spec = SCROLL[page][d.kind];
-  const stops = (pick ?? spec.stops.map((_, i) => i)).map((i) => spec.stops[i]);
+  const all = SCROLL_STOPS[page][d.kind];
+  const stops = (pick ?? all.map((_, i) => i)).map((i) => all[i]);
   const seg = Math.floor(dur / stops.length);
-  const MOVE = 16;
-  // Arrive at each stop at i*seg (the first stop is reached from 700px above).
+  const MOVE = 18;
   const keysF: number[] = [0];
-  const keysY: number[] = [Math.max(0, stops[0] - 700)];
+  const keysY: number[] = [Math.max(0, stops[0] - 600)];
   stops.forEach((y, i) => {
-    const arrive = i === 0 ? MOVE : i * seg + MOVE;
     if (i > 0) {
       keysF.push(i * seg);
       keysY.push(stops[i - 1]);
     }
-    keysF.push(arrive);
+    keysF.push(i * seg + MOVE);
     keysY.push(y);
   });
-  const y = interpolate(frame, keysF, keysY, {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)});
-  const yPrev = interpolate(Math.max(0, frame - 1), keysF, keysY, {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)});
-  const blur = Math.min(5, Math.abs(y - yPrev) * 0.03);
+  const ease = Easing.inOut(Easing.cubic);
+  const y = interpolate(frame, keysF, keysY, {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: ease});
+  const yPrev = interpolate(Math.max(0, frame - 1), keysF, keysY, {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: ease});
+  const blur = Math.min(4, Math.abs(y - yPrev) * 0.025);
   const cam = camAt(
     frame,
     d.portrait
       ? [
-          [0, {x: 0, y: 260 * d.u, z: 1.14, rx: 6, ry: 4, rz: -1}],
-          [dur, {x: 0, y: 260 * d.u, z: 1.18, rx: 2, ry: -3, rz: 0}],
+          [0, {x: 0, y: 260 * d.u, z: 1.14, rx: 5, ry: 3, rz: -0.6}],
+          [dur, {x: 0, y: 260 * d.u, z: 1.18, rx: 2, ry: -2, rz: 0}],
         ]
       : [
-          [0, {x: 200 * d.u, y: -40 * d.u, z: 1.08, rx: 6, ry: -12, rz: 0}],
+          [0, {x: 200 * d.u, y: -40 * d.u, z: 1.08, rx: 5, ry: -10, rz: 0}],
           [dur, {x: 230 * d.u, y: -40 * d.u, z: 1.12, rx: 3, ry: -6, rz: 0}],
         ],
     Easing.linear,
@@ -353,22 +380,16 @@ export const SiteScroll: React.FC<SiteScrollProps & {dur: number}> = ({page, cap
       ))}
     >
       <Device cam={cam}>
-        <Img
-          src={staticFile(`site/${spec.img}`)}
-          style={{position: 'absolute', left: 0, top: 0, width: VIEW[d.kind].w, height: spec.h, transform: `translateY(${-y}px)`, filter: blur > 0.3 ? `blur(${blur}px)` : undefined}}
-        />
+        <Page scroll={y} growth={page === 'growth'} blur={blur} />
       </Device>
     </Frame>
   );
 };
 
 /* ------------------------------------------------------------------ */
-/* Live filtering: City → Madrid, Treatment → PPF.                     */
+/* Live filtering: City → Cairo, Treatment → PPF, with real dropdowns. */
 /* ------------------------------------------------------------------ */
-const FILTER_POS: Record<Kind, {city: [number, number]; service: [number, number]; bar: [number, number]; cards: [number, number]; start: [number, number]}> = {
-  desktop: {city: [838, 652], service: [1168, 652], bar: [1000, 640], cards: [720, 640], start: [1250, 820]},
-  mobile: {city: [195, 577], service: [195, 643], bar: [195, 610], cards: [195, 560], start: [300, 780]},
-};
+const FILTER_SCROLL: Record<Kind, number> = {desktop: L.desktop.studiosTop, mobile: 1700};
 
 export type SiteFilterProps = {caption: Caption};
 
@@ -376,23 +397,53 @@ export const SiteFilter: React.FC<SiteFilterProps & {dur: number}> = ({caption, 
   const frame = useCurrentFrame();
   const d = useDevice();
   const focus = useFocus();
-  const P = FILTER_POS[d.kind];
-  const C1 = 30;
-  const C2 = 58;
+  const m = d.kind;
+  const lay = L[m];
+  const sc = FILTER_SCROLL[m];
+  const opt = (selY: number, i: number) => selY + 66 + i * 42 + 21 - sc;
+  const city: [number, number] = [lay.citySel.x + lay.citySel.w / 2, citySelY(m) + 27 - sc];
+  const svc: [number, number] = [lay.svcSel.x + lay.svcSel.w / 2, svcSelY(m) + 27 - sc];
+  const cairo: [number, number] = [lay.citySel.x + 90, opt(citySelY(m), CITIES.indexOf('Cairo'))];
+  const ppf: [number, number] = [lay.svcSel.x + 90, opt(svcSelY(m), SERVICES.indexOf('PPF'))];
+  const cards: [number, number] = [m === 'desktop' ? 720 : 195, lay.gridY - sc + (m === 'desktop' ? 230 : 260)];
+  const bar: [number, number] = m === 'desktop' ? [1000, city[1] + 90] : [195, (city[1] + svc[1]) / 2 + 90];
+
+  // timeline
+  const OPEN1 = 22;
+  const PICK1 = 40;
+  const OPEN2 = 60;
+  const PICK2 = 78;
+  const st: MarketState = {
+    city: frame >= PICK1 ? 'Cairo' : 'All cities',
+    service: frame >= PICK2 ? 'PPF' : 'All services',
+    open: frame >= OPEN1 && frame < PICK1 ? 'city' : frame >= OPEN2 && frame < PICK2 ? 'service' : null,
+    hover: frame >= OPEN1 && frame < PICK1 ? (frame >= OPEN1 + 8 ? 'Cairo' : 'All cities') : frame >= OPEN2 + 8 ? 'PPF' : 'All services',
+    cards: frame >= PICK1 ? CARDS_CAIRO_PPF : CARDS_ALL,
+    cardsIn: frame >= PICK1 ? interpolate(frame, [PICK1 + 2, PICK1 + 20], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}) : 1,
+  };
+  const keys: [number, [number, number]][] = [
+    [0, [cards[0] + 300, cards[1] + 200]],
+    [OPEN1 - 2, city],
+    [PICK1 - 3, cairo],
+    [OPEN2 - 2, svc],
+    [PICK2 - 3, ppf],
+    [PICK2 + 22, [cards[0] + 160, cards[1] + 60]],
+  ];
+  const kf = keys.map((k) => k[0]);
+  const eio = Easing.inOut(Easing.cubic);
+  const px = interpolate(frame, kf, keys.map((k) => k[1][0]), {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: eio});
+  const py = interpolate(frame, kf, keys.map((k) => k[1][1]), {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: eio});
+  const show = interpolate(frame, [2, 8, PICK2 + 18, PICK2 + 26], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const dx = d.portrait ? 0 : 180;
   const dy = d.portrait ? 260 : -40;
+  const zBar = d.portrait ? 1.3 : 1.42;
   const cam = camAt(frame, [
-    [0, focus(P.cards[0], P.cards[1], d.portrait ? 1.08 : 0.92, {rx: 6, ry: d.portrait ? 3 : -10}, dx, dy)],
-    [22, focus(P.bar[0], P.bar[1], d.portrait ? 1.25 : 1.45, {rx: 2, ry: d.portrait ? 0 : -4}, dx, dy)],
-    [C2 + 10, focus(P.bar[0], P.bar[1], d.portrait ? 1.3 : 1.5, {rx: 1, ry: d.portrait ? 0 : -3}, dx, dy)],
-    [C2 + 36, focus(P.cards[0], P.cards[1] + (d.portrait ? 140 : 80), d.portrait ? 1.12 : 0.98, {rx: 4, ry: d.portrait ? 2 : -8}, dx, dy)],
-    [dur, focus(P.cards[0], P.cards[1] + (d.portrait ? 160 : 100), d.portrait ? 1.15 : 1.0, {rx: 3, ry: d.portrait ? 1 : -6}, dx, dy)],
+    [0, focus(cards[0], cards[1] - 120, d.portrait ? 1.1 : 0.96, {rx: 5, ry: d.portrait ? 2 : -9}, dx, dy)],
+    [OPEN1 - 4, focus(bar[0], bar[1], zBar, {rx: 2, ry: d.portrait ? 0 : -4}, dx, dy)],
+    [PICK2 + 4, focus(bar[0], bar[1] + 10, zBar + 0.04, {rx: 1, ry: d.portrait ? 0 : -3}, dx, dy)],
+    [PICK2 + 30, focus(cards[0], cards[1], d.portrait ? 1.12 : 1.0, {rx: 3, ry: d.portrait ? 1 : -6}, dx, dy)],
+    [dur, focus(cards[0], cards[1] + 20, d.portrait ? 1.15 : 1.03, {rx: 2, ry: d.portrait ? 0 : -5}, dx, dy)],
   ]);
-  const px = interpolate(frame, [6, C1 - 2, C2 - 2, C2 + 30], [P.start[0], P.city[0], P.service[0], P.cards[0] + 120], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)});
-  const py = interpolate(frame, [6, C1 - 2, C2 - 2, C2 + 30], [P.start[1], P.city[1], P.service[1], P.cards[1] + 180], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)});
-  const show = interpolate(frame, [4, 10, C2 + 30, C2 + 40], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const m1 = interpolate(frame, [C1 + 2, C1 + 8], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const m2 = interpolate(frame, [C2 + 2, C2 + 8], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   return (
     <Frame
       captions={
@@ -402,10 +453,8 @@ export const SiteFilter: React.FC<SiteFilterProps & {dur: number}> = ({caption, 
       }
     >
       <Device cam={cam}>
-        <Shot name="studios" />
-        <Shot name="studios-madrid" opacity={m1} />
-        <Shot name="studios-madrid-ppf" opacity={m2} />
-        <Pointer x={px} y={py} clicks={[C1, C2]} show={show} />
+        <Page scroll={sc} st={st} />
+        <Pointer x={px} y={py} clicks={[OPEN1, PICK1, OPEN2, PICK2]} show={show} />
       </Device>
     </Frame>
   );
@@ -414,10 +463,7 @@ export const SiteFilter: React.FC<SiteFilterProps & {dur: number}> = ({caption, 
 /* ------------------------------------------------------------------ */
 /* Studio card → full profile.                                          */
 /* ------------------------------------------------------------------ */
-const PROFILE_POS: Record<Kind, {card: [number, number, number, number]; details: [number, number]}> = {
-  desktop: {card: [519, 137, 401, 628], details: [720, 560]},
-  mobile: {card: [16, 108, 358, 628], details: [195, 560]},
-};
+const PROFILE_SCROLL: Record<Kind, number> = {desktop: 1600, mobile: 2100};
 
 export type SiteProfileProps = {caption: Caption};
 
@@ -425,24 +471,34 @@ export const SiteProfile: React.FC<SiteProfileProps & {dur: number}> = ({caption
   const frame = useCurrentFrame();
   const d = useDevice();
   const focus = useFocus();
-  const {card, details} = PROFILE_POS[d.kind];
-  const V = VIEW[d.kind];
-  const cx = card[0] + card[2] / 2;
-  const cy = card[1] + card[3] / 2;
+  const m = d.kind;
+  const V = VIEW[m];
+  const sc = PROFILE_SCROLL[m];
+  const c = cardRect(m, 0);
+  const card = {x: c.x, y: c.y - sc, w: c.w, h: c.h};
+  const r = profileRect(m);
+  const cx = card.x + card.w / 2;
+  const cy = card.y + card.h / 2;
   const CLICK = 26;
   const dx = d.portrait ? 0 : 180;
   const dy = d.portrait ? 260 : -40;
+  const details: [number, number] = m === 'desktop' ? [720, 600] : [195, 560];
   const cam = camAt(frame, [
-    [0, focus(cx, cy, d.portrait ? 1.1 : 1.0, {rx: 5, ry: d.portrait ? 3 : -10}, dx, dy)],
-    [CLICK, focus(cx, cy, d.portrait ? 1.16 : 1.15, {rx: 2, ry: d.portrait ? 0 : -5}, dx, dy)],
-    [CLICK + 24, focus(V.w / 2, V.h / 2, d.portrait ? 1.1 : 0.96, {rx: 3, ry: d.portrait ? 0 : -6}, dx, dy)],
-    [dur, focus(details[0], details[1], d.portrait ? 1.25 : 1.3, {rx: 1, ry: d.portrait ? 0 : -3}, dx, dy)],
+    [0, focus(cx, cy, d.portrait ? 1.1 : 1.0, {rx: 5, ry: d.portrait ? 2 : -9}, dx, dy)],
+    [CLICK, focus(cx, cy, d.portrait ? 1.16 : 1.12, {rx: 2, ry: d.portrait ? 0 : -5}, dx, dy)],
+    [CLICK + 24, focus(V.w / 2, V.h / 2, d.portrait ? 1.1 : 0.98, {rx: 3, ry: d.portrait ? 0 : -6}, dx, dy)],
+    [dur, focus(details[0], details[1], d.portrait ? 1.22 : 1.25, {rx: 1, ry: d.portrait ? 0 : -3}, dx, dy)],
   ]);
-  const p = interpolate(frame, [CLICK + 2, CLICK + 20], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
-  const clip = `inset(${card[1] * (1 - p)}px ${(V.w - card[0] - card[2]) * (1 - p)}px ${(V.h - card[1] - card[3]) * (1 - p)}px ${card[0] * (1 - p)}px round ${24 * (1 - p)}px)`;
-  const px = interpolate(frame, [4, CLICK - 2], [cx + 260, cx + 10], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)});
-  const py = interpolate(frame, [4, CLICK - 2], [cy + 300, cy - 40], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)});
-  const show = interpolate(frame, [4, 10, CLICK + 4, CLICK + 10], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const p = interpolate(frame, [CLICK + 2, CLICK + 22], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
+  const lerp = (a: number, b: number) => a + (b - a) * p;
+  const top = lerp(card.y, r.y);
+  const left = lerp(card.x, r.x);
+  const right = lerp(V.w - card.x - card.w, V.w - r.x - r.w);
+  const bottom = lerp(V.h - card.y - card.h, V.h - r.y - r.h);
+  const clip = `inset(${top}px ${right}px ${bottom}px ${left}px round ${lerp(22, 30)}px)`;
+  const px = interpolate(frame, [2, CLICK - 2], [cx + 280, cx + 20], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)});
+  const py = interpolate(frame, [2, CLICK - 2], [cy + 320, cy - 60], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic)});
+  const show = interpolate(frame, [2, 8, CLICK + 4, CLICK + 10], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   return (
     <Frame
       captions={
@@ -452,8 +508,15 @@ export const SiteProfile: React.FC<SiteProfileProps & {dur: number}> = ({caption
       }
     >
       <Device cam={cam}>
-        <Shot name="studios-card" />
-        {p > 0 ? <Shot name="profile" clip={clip} /> : null}
+        <Page scroll={sc} st={CAIRO_ST} />
+        {p > 0 ? (
+          <>
+            <div style={{position: 'absolute', inset: 0, background: `rgba(0,0,0,${0.55 * p})`}} />
+            <div style={{position: 'absolute', inset: 0, clipPath: clip}}>
+              <ProfileModal m={m} />
+            </div>
+          </>
+        ) : null}
         <Pointer x={px} y={py} clicks={[CLICK]} show={show} />
       </Device>
     </Frame>
@@ -461,19 +524,20 @@ export const SiteProfile: React.FC<SiteProfileProps & {dur: number}> = ({caption
 };
 
 /* ------------------------------------------------------------------ */
-/* Single screen with a slow camera pan ("Judge the finish").           */
+/* "Judge the finish" section with a slow pan.                          */
 /* ------------------------------------------------------------------ */
-const PAN: Record<string, Record<Kind, [[number, number, number], [number, number, number]]>> = {
-  films: {desktop: [[430, 520, 1.15], [1000, 560, 1.2]], mobile: [[195, 330, 1.05], [195, 560, 1.15]]},
+const PAN: Record<Kind, {scroll: number; a: [number, number, number]; b: [number, number, number]}> = {
+  desktop: {scroll: 3500, a: [430, 520, 1.12], b: [1000, 560, 1.18]},
+  mobile: {scroll: 4170, a: [195, 330, 1.05], b: [195, 560, 1.15]},
 };
 
-export type SitePanProps = {shot: 'films'; caption: Caption};
+export type SitePanProps = {caption: Caption};
 
-export const SitePan: React.FC<SitePanProps & {dur: number}> = ({shot, caption, dur}) => {
+export const SitePan: React.FC<SitePanProps & {dur: number}> = ({caption, dur}) => {
   const frame = useCurrentFrame();
   const d = useDevice();
   const focus = useFocus();
-  const [a, b] = PAN[shot][d.kind];
+  const {scroll, a, b} = PAN[d.kind];
   const dx = d.portrait ? 0 : 180;
   const dy = d.portrait ? 260 : -40;
   const cam = camAt(
@@ -493,7 +557,7 @@ export const SitePan: React.FC<SitePanProps & {dur: number}> = ({shot, caption, 
       }
     >
       <Device cam={cam}>
-        <Shot name={shot} />
+        <Page scroll={scroll} />
       </Device>
     </Frame>
   );

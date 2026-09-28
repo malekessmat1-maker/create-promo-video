@@ -1,211 +1,132 @@
 {
   "photos": {
-    "porsche": {
-      "src": "porsche-road.jpg",
-      "pos": "50% 60%",
-      "posP": "62% 50%"
+    "cairoSunset": {
+      "src": "cairo-sunset-bridge.jpg",
+      "pos": "50% 50%",
+      "posP": "27% 50%"
     },
-    "mclaren": {
-      "src": "mclaren.jpg",
-      "pos": "50% 60%",
-      "posP": "45% 50%"
+    "cairoNile": {
+      "src": "cairo-nile-sunset.jpg",
+      "pos": "50% 50%",
+      "posP": "72% 50%"
     },
-    "amgRed": {
-      "src": "amg-red.jpg",
-      "pos": "50% 65%",
+    "cairoFelucca": {
+      "src": "cairo-felucca-dusk.jpg",
+      "pos": "50% 50%",
       "posP": "40% 50%"
     },
-    "rangeRover": {
-      "src": "range-rover.jpg",
+    "cairoTower": {
+      "src": "cairo-tower-night.jpg",
       "pos": "50% 45%",
       "posP": "50% 50%"
     },
-    "amgGtr": {
-      "src": "amg-gtr.jpg",
+    "cairoHighway": {
+      "src": "cairo-highway-night.jpg",
+      "pos": "50% 50%",
+      "posP": "50% 50%"
+    },
+    "giza": {
+      "src": "giza-pyramids.jpg",
+      "pos": "50% 55%",
+      "posP": "55% 50%"
+    },
+    "gizaCity": {
+      "src": "giza-city.jpg",
+      "pos": "50% 60%",
+      "posP": "45% 50%"
+    },
+    "alex": {
+      "src": "alex-qaitbay.jpg",
+      "pos": "50% 45%",
+      "posP": "50% 50%"
+    },
+    "alexHarbour": {
+      "src": "alex-harbour.jpg",
+      "pos": "50% 60%",
+      "posP": "50% 50%"
+    },
+    "ppfShop": {
+      "src": "ppf-shop-porsche.jpg",
+      "pos": "50% 55%",
+      "posP": "50% 50%"
+    },
+    "ppfHeadlight": {
+      "src": "det-hood.jpg",
+      "pos": "50% 45%",
+      "posP": "62% 50%"
+    },
+    "polisher": {
+      "src": "det-polisher.jpg",
+      "pos": "50% 50%",
+      "posP": "50% 50%"
+    },
+    "detailer": {
+      "src": "det-headlight.jpg",
+      "pos": "50% 40%",
+      "posP": "62% 50%"
+    },
+    "foam": {
+      "src": "det-foam.jpg",
       "pos": "50% 55%",
       "posP": "60% 50%"
     },
-    "ferrari": {
-      "src": "ferrari-yellow.jpg",
-      "pos": "50% 55%",
-      "posP": "40% 50%"
+    "glovesA": {
+      "src": "det-gloves-a.jpg",
+      "pos": "50% 40%",
+      "posP": "50% 50%"
     },
-    "lambo": {
-      "src": "lambo-yellow.jpg",
+    "glovesB": {
+      "src": "det-gloves-b.jpg",
+      "pos": "50% 55%",
+      "posP": "50% 50%"
+    },
+    "glovesC": {
+      "src": "det-gloves-c.jpg",
+      "pos": "50% 45%",
+      "posP": "50% 50%"
+    },
+    "bentley": {
+      "src": "lux-bentley.jpg",
       "pos": "60% 60%",
       "posP": "68% 50%"
     },
-    "camaro": {
-      "src": "camaro-blue.jpg",
-      "pos": "50% 55%",
-      "posP": "72% 50%"
-    },
-    "r8": {
-      "src": "audi-r8.jpg",
+    "orange": {
+      "src": "lux-orange.jpg",
       "pos": "50% 60%",
+      "posP": "50% 50%"
+    },
+    "darkSports": {
+      "src": "lux-dark-sports.jpg",
+      "pos": "50% 60%",
+      "posP": "50% 50%"
+    },
+    "genesis": {
+      "src": "lux-genesis.jpg",
+      "pos": "50% 55%",
+      "posP": "35% 50%"
+    },
+    "headlights": {
+      "src": "lux-headlights.jpg",
+      "pos": "50% 40%",
+      "posP": "50% 50%"
+    },
+    "bmwHeadlight": {
+      "src": "lux-bmw-headlight.jpg",
+      "pos": "50% 50%",
       "posP": "40% 50%"
     },
-    "m4": {
-      "src": "bmw-m4-portrait.jpg",
-      "pos": "50% 58%",
-      "posP": "50% 50%"
-    },
-    "sedan": {
-      "src": "sedan-black.jpg",
-      "pos": "50% 55%",
-      "posP": "50% 50%"
-    },
-    "fiat": {
-      "src": "fiat-blue.jpg",
+    "porscheRoad": {
+      "src": "lux-porsche-road.jpg",
       "pos": "50% 60%",
-      "posP": "52% 50%"
-    },
-    "suv": {
-      "src": "suv-desert.jpg",
-      "pos": "50% 60%",
-      "posP": "55% 50%"
-    },
-    "wash": {
-      "src": "detailing-wash.jpg",
-      "pos": "50% 50%",
-      "posP": "42% 50%"
-    },
-    "neon": {
-      "src": "merc-neon.jpg",
-      "pos": "50% 50%",
       "posP": "50% 50%"
     },
-    "garage": {
-      "src": "garage-camaro.jpg",
-      "pos": "50% 50%",
-      "posP": "68% 50%"
-    },
-    "m5": {
-      "src": "bmw-m5.jpg",
-      "pos": "50% 55%",
-      "posP": "55% 50%"
+    "studio": {
+      "src": "studio-garage.jpg",
+      "pos": "50% 60%",
+      "posP": "50% 50%"
     }
   },
   "blocks": {
-    "stats": {
-      "eyebrow": "The Veylon shortlist",
-      "title": [
-        "Fifteen studios.",
-        "Different standards."
-      ],
-      "items": [
-        {
-          "value": 15,
-          "label": "carefully selected Spanish studios"
-        },
-        {
-          "value": 5,
-          "label": "cities compared in one place"
-        },
-        {
-          "value": 3,
-          "label": "ways to protect and restore your car"
-        },
-        {
-          "value": 0,
-          "suffix": "€",
-          "label": "charged to compare or enquire"
-        }
-      ]
-    },
-    "filter": {
-      "eyebrow": "Filter by city and treatment",
-      "title": [
-        "No endless tabs.",
-        {
-          "text": "No choosing blind.",
-          "color": "#ff5a1f"
-        }
-      ],
-      "body": "Open any studio to see exactly what it does best: photos, services, pricing, hours and contact details."
-    },
-    "steps": {
-      "eyebrow": "Choose on evidence",
-      "title": [
-        "A faster, clearer way",
-        "to choose."
-      ],
-      "steps": [
-        {
-          "title": "Narrow it down",
-          "text": "Select your city and treatment. We remove the irrelevant options immediately."
-        },
-        {
-          "title": "Study the work",
-          "text": "Compare specialties, services and real finishes, not whichever studio bought the loudest ad."
-        },
-        {
-          "title": "Speak directly",
-          "text": "Contact the studio, explain the car and get the details you need before committing."
-        }
-      ]
-    },
-    "services": {
-      "eyebrow": "Protect & restore",
-      "items": [
-        {
-          "label": "PPF",
-          "photo": "amgGtr"
-        },
-        {
-          "label": "Ceramic",
-          "photo": "mclaren"
-        },
-        {
-          "label": "Detailing",
-          "photo": "wash"
-        },
-        {
-          "label": "Window tint",
-          "photo": "rangeRover"
-        },
-        {
-          "label": "Wrapping",
-          "photo": "lambo"
-        }
-      ]
-    },
-    "cities": {
-      "eyebrow": "Compare across Spain",
-      "cities": [
-        "Madrid",
-        "Barcelona",
-        "Marbella",
-        "Alicante",
-        "Valencia"
-      ],
-      "footer": "Five cities. One clean comparison."
-    },
-    "pillars": {
-      "eyebrow": "Not an agency retainer. A revenue system.",
-      "title": [
-        "We fix every place a customer",
-        "can choose you, or lose you."
-      ],
-      "steps": [
-        {
-          "title": "Look as premium as the work",
-          "text": "A sales experience that makes the quality visible, answers objections and earns the enquiry."
-        },
-        {
-          "title": "Reach owners ready to buy",
-          "text": "Campaigns built around expensive paint, real risk and clear outcomes, not boosted posts."
-        },
-        {
-          "title": "Own high-intent search",
-          "text": "When someone searches for PPF in your city, be one of the first credible options they find."
-        },
-        {
-          "title": "Stop losing hot leads",
-          "text": "Fast routing, cleaner qualification and follow-up, so serious buyers never die in an unread WhatsApp thread."
-        }
-      ]
-    },
     "ownerCTA": {
       "lines": [
         "Do not gamble",
@@ -216,7 +137,49 @@
       ],
       "body": "Compare the shortlist and choose with confidence.",
       "phoneLabel": "Call · WhatsApp",
-      "endLine": "Free for car owners · PPF · Ceramic · Detailing"
+      "endLine": "Free for car owners · Cairo · Alexandria · Giza"
+    },
+    "cities": {
+      "eyebrow": "Compare across Egypt",
+      "items": [
+        {
+          "label": "Cairo",
+          "photo": "cairoSunset"
+        },
+        {
+          "label": "Alexandria",
+          "photo": "alex"
+        },
+        {
+          "label": "Giza",
+          "photo": "giza"
+        }
+      ]
+    },
+    "craft": {
+      "eyebrow": "Protect & restore",
+      "items": [
+        {
+          "label": "PPF",
+          "photo": "ppfShop"
+        },
+        {
+          "label": "Ceramic",
+          "photo": "glovesC"
+        },
+        {
+          "label": "Detailing",
+          "photo": "foam"
+        },
+        {
+          "label": "Window tint",
+          "photo": "genesis"
+        },
+        {
+          "label": "Wrapping",
+          "photo": "orange"
+        }
+      ]
     }
   },
   "films": {
@@ -228,9 +191,8 @@
           "dur": 150,
           "energy": 3,
           "props": {
-            "shot": "hero",
             "caption": {
-              "eyebrow": "The shortlist for serious car owners",
+              "eyebrow": "Now in Egypt",
               "lines": [
                 "Protection,",
                 {
@@ -255,7 +217,7 @@
               {
                 "eyebrow": "The Veylon shortlist",
                 "lines": [
-                  "15 studios.",
+                  "Verified studios.",
                   {
                     "text": "Side by side.",
                     "color": "#ff5a1f"
@@ -263,9 +225,9 @@
                 ]
               },
               {
-                "eyebrow": "Madrid · Barcelona · Marbella · Alicante · Valencia",
+                "eyebrow": "Cairo · Alexandria · Giza · Sheikh Zayed",
                 "lines": [
-                  "5 cities.",
+                  "Every studio.",
                   {
                     "text": "One place.",
                     "color": "#ff5a1f"
@@ -277,7 +239,7 @@
         },
         {
           "type": "siteFilter",
-          "dur": 105,
+          "dur": 120,
           "energy": 3,
           "props": {
             "caption": {
@@ -300,9 +262,9 @@
             "caption": {
               "eyebrow": "Full studio profiles",
               "lines": [
-                "Photos, ratings,",
+                "Judge the work",
                 {
-                  "text": "pricing & hours.",
+                  "text": "before you book.",
                   "color": "#ff5a1f"
                 }
               ]
@@ -310,11 +272,27 @@
           }
         },
         {
+          "type": "services",
+          "dur": 90,
+          "energy": 3,
+          "props": {
+            "block": "cities"
+          }
+        },
+        {
+          "type": "services",
+          "dur": 120,
+          "energy": 3,
+          "props": {
+            "block": "craft"
+          }
+        },
+        {
           "type": "scratch",
           "dur": 105,
           "energy": 0,
           "props": {
-            "photo": "mclaren",
+            "photo": "bmwHeadlight",
             "hitAt": 18,
             "eyebrow": "PPF can protect your paint for years",
             "lines": [
@@ -338,7 +316,7 @@
             ],
             "captions": [
               {
-                "eyebrow": "For PPF businesses · Results across four Spanish businesses",
+                "eyebrow": "For PPF businesses · Results across four partners",
                 "lines": [
                   "€102K monthly",
                   {
@@ -361,21 +339,6 @@
           }
         },
         {
-          "type": "photo",
-          "dur": 90,
-          "energy": 2,
-          "props": {
-            "photo": "neon",
-            "eyebrow": "Spain proved the system",
-            "lines": [
-              {
-                "text": "Egypt is next.",
-                "color": "#ff5a1f"
-              }
-            ]
-          }
-        },
-        {
           "type": "logo",
           "dur": 105,
           "energy": 3,
@@ -390,7 +353,7 @@
           "energy": 2,
           "props": {
             "block": "ownerCTA",
-            "photo": "porsche",
+            "photo": "cairoTower",
             "switchAt": 90,
             "phoneLabel": "Call · WhatsApp",
             "endLine": "Protection marketplace · Growth partner"
@@ -406,9 +369,8 @@
           "dur": 150,
           "energy": 3,
           "props": {
-            "shot": "hero",
             "caption": {
-              "eyebrow": "The shortlist for serious car owners",
+              "eyebrow": "Now in Egypt",
               "lines": [
                 "Protection,",
                 {
@@ -429,7 +391,7 @@
               {
                 "eyebrow": "The Veylon shortlist",
                 "lines": [
-                  "15 studios.",
+                  "Verified studios.",
                   {
                     "text": "Side by side.",
                     "color": "#ff5a1f"
@@ -437,9 +399,9 @@
                 ]
               },
               {
-                "eyebrow": "Madrid · Barcelona · Marbella · Alicante · Valencia",
+                "eyebrow": "Cairo · Alexandria · Giza · Sheikh Zayed",
                 "lines": [
-                  "5 cities.",
+                  "Every studio.",
                   {
                     "text": "One place.",
                     "color": "#ff5a1f"
@@ -447,11 +409,11 @@
                 ]
               },
               {
-                "eyebrow": "PPF · Ceramic · Detailing",
+                "eyebrow": "Don't take their word for it",
                 "lines": [
-                  "Real work.",
+                  "Judge",
                   {
-                    "text": "Shown.",
+                    "text": "the finish.",
                     "color": "#ff5a1f"
                   }
                 ]
@@ -478,15 +440,15 @@
         },
         {
           "type": "siteProfile",
-          "dur": 120,
+          "dur": 105,
           "energy": 3,
           "props": {
             "caption": {
               "eyebrow": "Full studio profiles",
               "lines": [
-                "Photos, ratings,",
+                "Judge the work",
                 {
-                  "text": "pricing & hours.",
+                  "text": "before you book.",
                   "color": "#ff5a1f"
                 }
               ]
@@ -494,11 +456,19 @@
           }
         },
         {
+          "type": "services",
+          "dur": 90,
+          "energy": 3,
+          "props": {
+            "block": "cities"
+          }
+        },
+        {
           "type": "scratch",
           "dur": 105,
           "energy": 0,
           "props": {
-            "photo": "mclaren",
+            "photo": "bmwHeadlight",
             "hitAt": 18,
             "eyebrow": "PPF can protect your paint for years",
             "lines": [
@@ -525,7 +495,7 @@
           "energy": 2,
           "props": {
             "block": "ownerCTA",
-            "photo": "porsche",
+            "photo": "cairoTower",
             "switchAt": 90
           }
         }
@@ -539,7 +509,6 @@
           "dur": 120,
           "energy": 3,
           "props": {
-            "shot": "hero",
             "revealAt": 50,
             "caption": {
               "eyebrow": "Your car. Your standards.",
@@ -567,7 +536,7 @@
               {
                 "eyebrow": "The Veylon shortlist",
                 "lines": [
-                  "15 studios.",
+                  "Verified studios.",
                   {
                     "text": "Side by side.",
                     "color": "#ff5a1f"
@@ -575,9 +544,9 @@
                 ]
               },
               {
-                "eyebrow": "Madrid · Barcelona · Marbella · Alicante · Valencia",
+                "eyebrow": "Cairo · Alexandria · Giza · Sheikh Zayed",
                 "lines": [
-                  "5 cities.",
+                  "Every studio.",
                   {
                     "text": "One place.",
                     "color": "#ff5a1f"
@@ -589,7 +558,7 @@
         },
         {
           "type": "siteFilter",
-          "dur": 105,
+          "dur": 120,
           "energy": 3,
           "props": {
             "caption": {
@@ -609,16 +578,9 @@
           "dur": 90,
           "energy": 3,
           "props": {
-            "shot": "films",
             "caption": {
               "eyebrow": "Don't take their word for it",
               "lines": [
-                {
-                  "text": "Judge the finish.",
-                  "color": "#ff5a1f"
-                }
-              ],
-              "linesP": [
                 "Judge",
                 {
                   "text": "the finish.",
@@ -629,11 +591,19 @@
           }
         },
         {
+          "type": "services",
+          "dur": 120,
+          "energy": 3,
+          "props": {
+            "block": "craft"
+          }
+        },
+        {
           "type": "scratch",
           "dur": 90,
           "energy": 0,
           "props": {
-            "photo": "lambo",
+            "photo": "bmwHeadlight",
             "hitAt": 15,
             "eyebrow": "PPF can protect your paint for years",
             "lines": [
@@ -660,7 +630,7 @@
           "energy": 2,
           "props": {
             "block": "ownerCTA",
-            "photo": "r8",
+            "photo": "cairoHighway",
             "switchAt": 90
           }
         }
@@ -674,25 +644,12 @@
           "dur": 150,
           "energy": 3,
           "props": {
-            "shot": "hero",
             "caption": {
               "eyebrow": "Free for car owners",
               "lines": [
                 "Protect the car.",
                 {
                   "text": "Skip the guesswork.",
-                  "color": "#ff5a1f"
-                }
-              ],
-              "linesP": [
-                "Protect",
-                "the car.",
-                {
-                  "text": "Skip the",
-                  "color": "#ff5a1f"
-                },
-                {
-                  "text": "guesswork.",
                   "color": "#ff5a1f"
                 }
               ]
@@ -710,24 +667,16 @@
                 "eyebrow": "Free for car owners",
                 "lines": [
                   {
-                    "text": "0€",
+                    "text": "0 EGP",
                     "color": "#ff5a1f"
                   },
                   "to compare or enquire."
-                ],
-                "linesP": [
-                  {
-                    "text": "0€",
-                    "color": "#ff5a1f"
-                  },
-                  "to compare",
-                  "or enquire."
                 ]
               },
               {
                 "eyebrow": "The Veylon shortlist",
                 "lines": [
-                  "15 studios.",
+                  "Verified studios.",
                   {
                     "text": "Side by side.",
                     "color": "#ff5a1f"
@@ -735,9 +684,9 @@
                 ]
               },
               {
-                "eyebrow": "Madrid · Barcelona · Marbella · Alicante · Valencia",
+                "eyebrow": "Cairo · Alexandria · Giza · Sheikh Zayed",
                 "lines": [
-                  "5 cities.",
+                  "Every studio.",
                   {
                     "text": "One place.",
                     "color": "#ff5a1f"
@@ -766,7 +715,7 @@
         },
         {
           "type": "siteProfile",
-          "dur": 120,
+          "dur": 105,
           "energy": 3,
           "props": {
             "caption": {
@@ -782,11 +731,19 @@
           }
         },
         {
+          "type": "services",
+          "dur": 90,
+          "energy": 3,
+          "props": {
+            "block": "cities"
+          }
+        },
+        {
           "type": "scratch",
           "dur": 105,
           "energy": 0,
           "props": {
-            "photo": "fiat",
+            "photo": "bmwHeadlight",
             "hitAt": 18,
             "eyebrow": "PPF can protect your paint for years",
             "lines": [
@@ -813,7 +770,7 @@
           "energy": 2,
           "props": {
             "block": "ownerCTA",
-            "photo": "sedan",
+            "photo": "cairoNile",
             "switchAt": 90
           }
         }
@@ -827,7 +784,7 @@
           "dur": 150,
           "energy": 3,
           "props": {
-            "shot": "growth-hero",
+            "page": "growth",
             "caption": {
               "eyebrow": "For PPF, ceramic & detailing businesses",
               "lines": [
@@ -836,27 +793,19 @@
                   "text": "behind the studios.",
                   "color": "#ff5a1f"
                 }
-              ],
-              "linesP": [
-                "The growth",
-                "system behind",
-                {
-                  "text": "the studios.",
-                  "color": "#ff5a1f"
-                }
               ]
             }
           }
         },
         {
           "type": "siteScroll",
-          "dur": 240,
+          "dur": 300,
           "energy": 3,
           "props": {
             "page": "growth",
             "captions": [
               {
-                "eyebrow": "Results across four Spanish businesses",
+                "eyebrow": "Results across four partner businesses",
                 "lines": [
                   "€102K monthly",
                   {
@@ -894,6 +843,16 @@
                     "color": "#ff5a1f"
                   }
                 ]
+              },
+              {
+                "eyebrow": "Now in Egypt",
+                "lines": [
+                  "Cairo. Alexandria.",
+                  {
+                    "text": "And beyond.",
+                    "color": "#ff5a1f"
+                  }
+                ]
               }
             ]
           }
@@ -911,34 +870,17 @@
                   "text": "ready-to-buy car owners.",
                   "color": "#ff5a1f"
                 }
-              ],
-              "linesP": [
-                "In front of",
-                {
-                  "text": "ready-to-buy",
-                  "color": "#ff5a1f"
-                },
-                {
-                  "text": "car owners.",
-                  "color": "#ff5a1f"
-                }
               ]
             }
           }
         },
         {
-          "type": "photo",
-          "dur": 105,
-          "energy": 2,
+          "type": "services",
+          "dur": 90,
+          "energy": 3,
           "props": {
-            "photo": "neon",
-            "eyebrow": "Spain proved the system",
-            "lines": [
-              {
-                "text": "Egypt is next.",
-                "color": "#ff5a1f"
-              }
-            ]
+            "block": "cities",
+            "eyebrow": "Now in Egypt"
           }
         },
         {
@@ -947,7 +889,7 @@
           "energy": 3,
           "props": {
             "tagline": "Protection marketplace · Growth partner",
-            "eyebrow": "Not an agency retainer. A revenue system."
+            "eyebrow": "Now in Egypt"
           }
         },
         {
@@ -955,7 +897,7 @@
           "dur": 240,
           "energy": 2,
           "props": {
-            "photo": "amgGtr",
+            "photo": "cairoSunset",
             "switchAt": 90,
             "eyebrow": "For PPF, ceramic & detailing businesses",
             "lines": [

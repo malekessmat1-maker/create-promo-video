@@ -48,7 +48,7 @@ export const Photo: React.FC<{
   grayscale?: number;
   orangeWash?: boolean;
   bottomFade?: boolean;
-}> = ({photo, dur, zoom = [1.08, 1.18], drift = 30, brightness = 0.72, grayscale = 0, orangeWash = true, bottomFade = true}) => {
+}> = ({photo, dur, zoom = [1.08, 1.18], drift = 30, brightness = 0.84, grayscale = 0, orangeWash = true, bottomFade = true}) => {
   const frame = useCurrentFrame();
   const {portrait, u} = useLayout();
   const t = interpolate(frame, [0, dur], [0, 1], {extrapolateRight: 'clamp'});
@@ -64,7 +64,7 @@ export const Photo: React.FC<{
           objectFit: 'cover',
           objectPosition: portrait ? photo.posP ?? '50% 50%' : photo.pos ?? '50% 50%',
           transform: `translateX(${x}px) scale(${scale})`,
-          filter: `saturate(${0.78 * (1 - grayscale)}) contrast(1.12) brightness(${brightness}) grayscale(${grayscale})`,
+          filter: `saturate(${0.92 * (1 - grayscale)}) contrast(1.1) brightness(${brightness}) grayscale(${grayscale})`,
         }}
       />
       {bottomFade ? (

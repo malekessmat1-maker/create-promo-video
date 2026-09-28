@@ -344,7 +344,7 @@ const ServiceShot: React.FC<{label: string; photo: PhotoSpec; index: number; tot
   const track = interpolate(frame, [0, dur], [0.02, -0.01]);
   return (
     <AbsoluteFill>
-      <Photo photo={photo} dur={dur} zoom={[1.18, 1.08]} drift={60} brightness={0.62} />
+      <Photo photo={photo} dur={dur} zoom={[1.16, 1.06]} drift={50} brightness={0.8} />
       <Stage>
         <div style={{display: 'flex', flexDirection: 'column', gap: 20 * u}}>
           <div style={{fontFamily: F.body, fontWeight: 700, fontSize: 24 * u, letterSpacing: '0.16em', color: C.orange, textTransform: 'uppercase'}}>

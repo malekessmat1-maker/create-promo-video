@@ -4,4 +4,3 @@ video/out/
 video/public/audio/*.wav
 __pycache__/
 deliver/
-video/capture/shots/
