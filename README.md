@@ -91,6 +91,6 @@ npm run soundtrack   # regenerate the soundtrack
 npm run render       # renders out/hadal-ad-landscape.mp4 and out/hadal-ad-portrait.mp4
 ```
 
-The rendered films are also in `site/assets/`, and the website plays the landscape cut in its "Film" section.
+The finished films are in `ads/`: `hadal-ad-landscape.mp4` (1920×1080) and `hadal-ad-portrait.mp4` (1080×1920), both with sound. A smaller 720p copy in `site/assets/` plays in the website's "Film" section.
 
 > HADAL, Lumen‑6, the dives and the guest quotes are all made up for this demo.
