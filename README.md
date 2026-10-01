@@ -57,7 +57,7 @@ Scrolling down the page takes you down through the ocean. A WebGL scene (Three.j
 
 - **Scroll = depth.** Each section has a real depth (0 m → 4,000 m). The camera follows it down, and the water colour, fog, sunlight and sound change as you go.
 - **Lumen‑6 submersible.** Built from Three.js primitives: an acrylic sphere with transmission, six seats, thrusters with spinning props, a strobe and volumetric floodlights. It follows you down with inertia, tilts with scroll speed, and responds to the mouse.
-- **Ocean life.** Caustics and god rays at the surface, a school of fish, procedural jellyfish with pulsing shader bells and swaying tentacles, a 46 m glowing siphonophore, plankton that lights up near the cursor, an anglerfish lure, and a seafloor with tube worms.
+- **Ocean life.** Caustics and god rays at the surface, a school of fish, procedural jellyfish with pulsing shader bells and swaying tentacles, a long glowing siphonophore, plankton that lights up near the cursor, an anglerfish lure, and a seafloor with tube worms.
 - **Live depth gauge.** Shows depth, pressure (atm), water temperature, sunlight % and the current ocean zone.
 - **Interactions.** Floodlight switch (Auto / On / Off), 3D tilt cards, magnetic buttons, a custom cursor, a dive-log carousel, a booking form with live pricing, seat availability and charter discount, an FAQ, and an "Ascend to the surface" button.
 - **Generated sound.** A WebAudio ocean bed with sonar pings; the low-pass filter closes as you go deeper. Turn it on with the button in the nav.
