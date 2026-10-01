@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sorted Budget Planner</title>
+<meta name="description" content="The 2027 budget spreadsheet for Excel and Google Sheets. Budget, track spending, plan your debt-free date and hit savings goals. One payment, no subscription.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a one-page store. Hero with a live 3D spreadsheet, then proof the product works
+   (interactive calculators that use the planner's own maths), the tab tour, price, FAQ.
+   Single deliberate light theme: money green on a faintly green paper, coral for warnings. */
+:root {
+  --paper: #f5f9f6;
+  --card: #ffffff;
+  --ink: #17221d;
+  --muted: #5d6f67;
+  --green: #2e7d5b;
+  --green-deep: #1f4d3a;
+  --mint: #e3f1e9;
+  --amber: #e0a33f;
+  --coral: #e0603f;
+  --yellow: #fff6d6;
+  --line: #d9e4de;
+  --f-display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --gutter: clamp(16px, 4vw, 48px);
+  --radius: 18px;
+  --shadow: 0 1px 2px rgba(23,34,29,.06), 0 18px 50px -18px rgba(23,34,29,.25);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; }
+button, input { font: inherit; color: inherit; }
+img, video { max-width: 100%; display: block; }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 8px; }
+[hidden] { display: none !important; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: var(--gutter); }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.eyebrow { font-family: var(--f-mono); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--green); font-weight: 600; margin: 0; }
+h1, h2, h3 { font-family: var(--f-display); letter-spacing: -0.02em; line-height: 1.02; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.6rem); font-weight: 800; }
+h3 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; }
+.lede { color: var(--muted); font-size: clamp(1.05rem, 1rem + .3vw, 1.25rem); max-width: 56ch; margin: 0; }
+section { padding-block: clamp(70px, 10vw, 130px); }
+.sec-head { display: grid; gap: 16px; margin-bottom: clamp(32px, 5vw, 56px); max-width: 760px; }
+
+/* nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: rgba(245,249,246,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color .3s; }
+.nav.scrolled { border-color: var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.logo { font-family: var(--f-display); font-weight: 800; font-size: 1.6rem; text-decoration: none; letter-spacing: -0.03em; display: inline-flex; align-items: baseline; }
+.logo i { color: var(--green); font-style: normal; }
+.nav-links { display: flex; gap: 28px; font-weight: 500; }
+.nav-links a { text-decoration: none; color: var(--muted); transition: color .2s; }
+.nav-links a:hover { color: var(--ink); }
+.btn { --mx: 0px; --my: 0px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 0; cursor: pointer; text-decoration: none; font-weight: 700; border-radius: 999px; padding: 15px 26px; transform: translate(var(--mx), var(--my)); transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .25s, background .25s; white-space: nowrap; }
+.btn-primary { background: var(--green); color: #fff; box-shadow: 0 10px 30px -10px rgba(46,125,91,.7); }
+.btn-primary:hover { background: var(--green-deep); box-shadow: 0 16px 40px -10px rgba(46,125,91,.8); }
+.btn-ghost { background: var(--card); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+.btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.btn-sm { padding: 10px 18px; font-size: .95rem; }
+.btn .price-tag { background: rgba(255,255,255,.18); padding: 2px 10px; border-radius: 999px; font-size: .9em; }
+
+/* hero */
+.hero { padding-block: clamp(40px, 6vw, 80px) clamp(60px, 8vw, 110px); position: relative; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: clamp(30px, 5vw, 70px); align-items: center; }
+.hero h1 { font-size: clamp(2.6rem, 1.5rem + 3.4vw, 4.4rem); font-weight: 800; }
+.hero h1 em { font-style: normal; color: var(--green); position: relative; white-space: nowrap; }
+.hero h1 em svg { position: absolute; left: 0; bottom: -0.12em; width: 100%; height: .3em; overflow: visible; }
+.hero h1 em path { stroke: var(--amber); stroke-width: 6; fill: none; stroke-linecap: round; stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1.2s .7s cubic-bezier(.6,0,.2,1) forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.hero-copy { display: grid; gap: 24px; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.trust { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--muted); font-size: .92rem; padding: 0; margin: 0; list-style: none; }
+.trust li { display: inline-flex; align-items: center; gap: 7px; }
+.trust li::before { content: ""; width: 18px; height: 18px; border-radius: 50%; background: var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' stroke='%232e7d5b' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat; }
+
+/* 3D spreadsheet stage */
+.stage { perspective: 1600px; position: relative; min-width: 0; }
+.sheet { --rx: 8deg; --ry: -14deg; transform: rotateX(var(--rx)) rotateY(var(--ry)) rotateZ(1deg); transform-style: preserve-3d; transition: transform .6s cubic-bezier(.2,.8,.2,1); background: var(--card); border-radius: 16px; box-shadow: 0 2px 4px rgba(23,34,29,.06), 40px 50px 80px -30px rgba(23,34,29,.35); overflow: hidden; border: 1px solid var(--line); }
+.sheet-bar { display: flex; align-items: center; gap: 7px; padding: 10px 14px; background: #eef3f0; border-bottom: 1px solid var(--line); }
+.sheet-bar i { width: 10px; height: 10px; border-radius: 50%; background: #d3ddd8; }
+.sheet-bar span { margin-left: 10px; font-size: .78rem; color: var(--muted); font-weight: 600; }
+.sheet-body { padding: 18px 18px 8px; display: grid; gap: 14px; }
+.sheet-title { display: flex; justify-content: space-between; align-items: baseline; }
+.sheet-title b { font-family: var(--f-display); color: var(--green); font-size: 1.35rem; }
+.sheet-title span { font-size: .78rem; background: var(--yellow); padding: 3px 10px; border-radius: 6px; font-weight: 600; }
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.kpi { background: var(--paper); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.kpi small { display: block; font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+.kpi b { font-family: var(--f-mono); font-size: 1.05rem; }
+.kpi.good b { color: var(--green); }
+.rows { display: grid; font-size: .8rem; }
+.row { display: grid; grid-template-columns: 1.4fr .7fr 1fr .9fr; gap: 8px; align-items: center; padding: 7px 2px; border-bottom: 1px solid #edf2ef; }
+.row.head { color: #fff; background: var(--green); border-radius: 6px; padding: 7px 8px; font-weight: 600; border: 0; }
+.row .grp { color: var(--muted); font-size: .72rem; }
+.row .num { font-family: var(--f-mono); text-align: right; }
+.bar { height: 8px; border-radius: 6px; background: #edf2ef; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: #8ccba9; border-radius: 6px; transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+.bar.over i { background: var(--coral); }
+.tabs-strip { display: flex; gap: 2px; padding: 0 10px; background: #eef3f0; border-top: 1px solid var(--line); overflow: hidden; }
+.tabs-strip span { font-size: .7rem; padding: 7px 10px; color: var(--muted); white-space: nowrap; }
+.tabs-strip span.on { background: var(--card); color: var(--green); font-weight: 700; border-top: 2px solid var(--green); }
+.float { position: absolute; background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 12px 16px; display: grid; gap: 2px; border: 1px solid var(--line); transform: translateZ(80px); will-change: transform; }
+.float small { font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+.float b { font-family: var(--f-display); font-size: 1.3rem; }
+.float.f1 { right: -18px; top: 18%; }
+.float.f1 b { color: var(--green); }
+.float.f2 { left: -26px; bottom: 12%; }
+.ring { width: 46px; height: 46px; }
+.float.f2 { grid-template-columns: auto auto; align-items: center; column-gap: 12px; }
+
+/* marquee band */
+.band { border-block: 1px solid var(--line); background: var(--card); overflow: hidden; padding-block: 16px; }
+.band-track { display: flex; gap: 46px; width: max-content; animation: slide 40s linear infinite; font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; color: var(--muted); }
+.band-track b { color: var(--green); }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* pain → fix */
+.split { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.pain { background: var(--card); border-radius: var(--radius); padding: 26px; border: 1px solid var(--line); display: grid; gap: 10px; align-content: start; }
+.pain .q { font-family: var(--f-display); font-size: 1.25rem; font-weight: 700; color: var(--coral); line-height: 1.2; }
+.pain p { margin: 0; color: var(--muted); }
+.pain p b { color: var(--ink); }
+
+/* calculator */
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; }
+.panel { background: var(--card); border-radius: 22px; padding: clamp(20px, 3vw, 34px); border: 1px solid var(--line); box-shadow: var(--shadow); min-width: 0; }
+.panel h3 { margin-bottom: 6px; }
+.panel > p { color: var(--muted); margin: 0 0 20px; }
+.field { display: grid; gap: 6px; margin-bottom: 16px; }
+.field label { font-weight: 600; font-size: .92rem; }
+.money-input { display: flex; align-items: center; border: 1.5px solid var(--line); border-radius: 12px; background: var(--yellow); padding: 0 14px; transition: border-color .2s; }
+.money-input:focus-within { border-color: var(--green); }
+.money-input input { border: 0; background: transparent; padding: 13px 0; width: 100%; font-family: var(--f-mono); font-size: 1.15rem; outline: none; }
+.money-input span { color: var(--muted); font-family: var(--f-mono); }
+.donut-wrap { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 22px; align-items: center; }
+.donut { width: 170px; height: 170px; }
+.donut circle { fill: none; stroke-width: 22; transition: stroke-dasharray .8s cubic-bezier(.2,.8,.2,1), stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1); }
+.legend { display: grid; gap: 12px; }
+.legend div { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; }
+.legend i { width: 14px; height: 14px; border-radius: 4px; align-self: center; }
+.legend b { font-family: var(--f-mono); font-size: 1.1rem; }
+.legend small { display: block; color: var(--muted); font-size: .82rem; }
+.range { width: 100%; accent-color: var(--green); }
+.result { margin-top: 18px; padding: 16px 18px; border-radius: 14px; background: var(--mint); display: grid; gap: 4px; }
+.result small { color: var(--muted); font-weight: 600; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
+.result b { font-family: var(--f-display); font-size: clamp(1.7rem, 1.3rem + 1.5vw, 2.3rem); color: var(--green-deep); line-height: 1.1; }
+.result span { color: var(--muted); font-size: .95rem; }
+.result.warn { background: #fdebe5; }
+.result.warn b { color: var(--coral); }
+.two { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 12px; }
+
+/* tour */
+.tour { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(20px, 4vw, 50px); align-items: start; }
+.tour-list { display: grid; gap: 6px; }
+.tour-list button { text-align: left; background: none; border: 0; border-radius: 14px; padding: 14px 18px; cursor: pointer; display: grid; gap: 2px; transition: background .25s; }
+.tour-list button b { font-family: var(--f-display); font-size: 1.15rem; }
+.tour-list button span { color: var(--muted); font-size: .94rem; }
+.tour-list button[aria-selected="true"] { background: var(--card); box-shadow: var(--shadow); }
+.tour-list button[aria-selected="true"] b { color: var(--green); }
+.tour-view { position: sticky; top: 90px; perspective: 1400px; min-width: 0; }
+.tour-view .sheet { --rx: 4deg; --ry: -6deg; }
+.pane { display: none; }
+.pane.on { display: grid; gap: 12px; animation: pop .5s cubic-bezier(.2,.8,.2,1); }
+@keyframes pop { from { opacity: 0; transform: translateY(14px); } }
+.mini-chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.mini-chart div { flex: 1; display: flex; flex-direction: column-reverse; border-radius: 4px 4px 0 0; overflow: hidden; }
+.mini-chart i { display: block; }
+.months { display: flex; gap: 6px; font-size: .62rem; color: var(--muted); }
+.months span { flex: 1; text-align: center; }
+.tx { display: grid; grid-template-columns: .9fr 1.4fr 1.1fr .8fr; gap: 8px; font-size: .78rem; padding: 6px 2px; border-bottom: 1px solid #edf2ef; }
+.tx .in { background: var(--yellow); border-radius: 4px; padding: 0 4px; }
+.goal { display: grid; gap: 5px; }
+.goal div { display: flex; justify-content: space-between; font-size: .84rem; }
+.goal .bar { height: 10px; }
+
+/* compare + pricing */
+.compare { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 18px; max-width: 900px; }
+.cmp { border-radius: var(--radius); padding: 26px; border: 1px solid var(--line); background: var(--card); display: grid; gap: 10px; align-content: start; }
+.cmp.us { border: 2px solid var(--green); box-shadow: var(--shadow); }
+.cmp .big { font-family: var(--f-display); font-size: 2.6rem; font-weight: 800; line-height: 1; }
+.cmp ul { margin: 0; padding-left: 20px; color: var(--muted); display: grid; gap: 6px; }
+.price { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 0; background: var(--green-deep); color: #eaf5ee; border-radius: 28px; overflow: hidden; box-shadow: var(--shadow); }
+.price-l { padding: clamp(26px, 5vw, 56px); display: grid; gap: 18px; align-content: start; }
+.price-l h2 { color: #fff; }
+.price-l ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.price-l li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; }
+.price-l li::before { content: "✓"; color: var(--amber); font-weight: 800; }
+.price-r { background: rgba(255,255,255,.06); padding: clamp(26px, 5vw, 56px); display: grid; gap: 14px; align-content: center; justify-items: start; border-left: 1px solid rgba(255,255,255,.1); }
+.price-r .amt { font-family: var(--f-display); font-weight: 800; font-size: clamp(4rem, 3rem + 4vw, 6rem); line-height: .9; color: #fff; }
+.price-r .amt sup { font-size: .4em; vertical-align: top; position: relative; top: .4em; margin-right: 4px; }
+.price-r .was { color: #a8c7b6; }
+.price-r .was s { color: #cfe3d7; }
+.price-r .btn-primary { background: var(--amber); color: #2a1a00; box-shadow: 0 12px 40px -10px rgba(224,163,63,.8); font-size: 1.1rem; padding: 18px 34px; }
+.price-r .btn-primary:hover { background: #f0b552; }
+.price-r small { color: #a8c7b6; }
+
+/* film */
+.film { border-radius: 22px; overflow: hidden; background: #000; box-shadow: var(--shadow); aspect-ratio: 16/9; position: relative; max-width: 960px; }
+.film video { width: 100%; height: 100%; object-fit: cover; }
+.film button { position: absolute; inset: 0; margin: auto; width: 92px; height: 92px; border-radius: 50%; border: 0; background: var(--amber); cursor: pointer; display: grid; place-items: center; box-shadow: 0 0 0 0 rgba(224,163,63,.6); animation: pulse 2.2s infinite; }
+.film button::before { content: ""; border-left: 24px solid #2a1a00; border-top: 15px solid transparent; border-bottom: 15px solid transparent; margin-left: 6px; }
+.film.playing button { display: none; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 24px rgba(224,163,63,0); } 100% { box-shadow: 0 0 0 0 rgba(224,163,63,0); } }
+
+/* faq */
+.faq { max-width: 820px; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; padding: 20px 4px; font-weight: 600; font-size: 1.1rem; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--green); font-size: 1.5rem; line-height: 1; transition: transform .3s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p { margin: 0; padding: 0 4px 22px; color: var(--muted); max-width: 66ch; }
+
+footer { padding-block: 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 30px; justify-content: space-between; align-items: center; }
+
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, calc(100% + 60px)); visibility: hidden; background: var(--ink); color: #fff; padding: 14px 20px; border-radius: 14px; box-shadow: var(--shadow); z-index: 60; max-width: min(520px, calc(100% - 32px)); transition: transform .45s cubic-bezier(.2,.8,.2,1); font-size: .95rem; }
+.toast.on { transform: translate(-50%, 0); visibility: visible; }
+.sticky-buy { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 45; display: none; }
+.sticky-buy .btn { width: 100%; }
+
+.reveal { transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
+.js .reveal.pre { opacity: 0; transform: translateY(40px); }
+
+@media (max-width: 980px) {
+  .hero .wrap, .calc, .tour, .price { grid-template-columns: minmax(0, 1fr); }
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .tour-view { position: static; }
+  .price-r { border-left: 0; border-top: 1px solid rgba(255,255,255,.1); }
+  .float.f1 { right: 4px; } .float.f2 { left: 4px; }
+}
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+  .compare { grid-template-columns: minmax(0, 1fr); }
+  .donut-wrap { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .legend { width: 100%; }
+  .row { grid-template-columns: 1.3fr 1fr .9fr; }
+  .row > :nth-child(2) { display: none; }
+  .tx { grid-template-columns: 1fr 1.2fr .8fr; }
+  .tx > :nth-child(3) { display: none; }
+  .sticky-buy.show { display: block; }
+  .float { display: none; }
+  .two { grid-template-columns: minmax(0,1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .js .reveal.pre { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="logo" aria-label="Sorted home">Sorted<i>.</i></a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#try">Try it</a><a href="#inside">What's inside</a><a href="#film">Watch</a><a href="#faq">FAQ</a>
+    </nav>
+    <a href="#buy" class="btn btn-primary btn-sm buy-link magnetic">Get it · $17</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">2027 Budget Planner · Excel &amp; Google Sheets</p>
+        <h1>Know where every dollar <em>goes.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3 14 C 50 4, 120 4, 197 12"/></svg></em></h1>
+        <p class="lede">Sorted is a budget spreadsheet that takes about ten minutes a week. Plan each paycheck, log your spending, see your debt-free date, and watch your savings goals fill up.</p>
+        <div class="hero-cta">
+          <a href="#buy" class="btn btn-primary buy-link magnetic">Get Sorted <span class="price-tag">$17</span></a>
+          <a href="#try" class="btn btn-ghost magnetic">Try the free calculator</a>
+        </div>
+        <ul class="trust">
+          <li>One payment, no subscription</li><li>Instant download</li><li>30-day refund</li>
+        </ul>
+      </div>
+
+      <div class="stage" id="stage" aria-label="Preview of the This Month tab">
+        <div class="sheet" id="heroSheet">
+          <div class="sheet-bar"><i></i><i></i><i></i><span>Sorted-Budget-Planner.xlsx</span></div>
+          <div class="sheet-body">
+            <div class="sheet-title"><b>This Month</b><span>January ▾</span></div>
+            <div class="kpis">
+              <div class="kpi"><small>Income</small><b class="count" data-to="4550">4,550</b></div>
+              <div class="kpi"><small>Spent</small><b class="count" data-to="2761">2,761</b></div>
+              <div class="kpi good"><small>Left over</small><b class="count" data-to="444">444</b></div>
+            </div>
+            <div class="rows" id="heroRows">
+              <div class="row head"><span>Category</span><span>Group</span><span>Used</span><span class="num">Left</span></div>
+            </div>
+          </div>
+          <div class="tabs-strip"><span>Start Here</span><span>Setup</span><span>Transactions</span><span class="on">This Month</span><span>Year Dashboard</span><span>Debt Payoff</span><span>Savings Goals</span></div>
+        </div>
+        <div class="float f1" data-depth="40"><small>Debt-free by</small><b>Oct 2030</b></div>
+        <div class="float f2" data-depth="60">
+          <svg class="ring" viewBox="0 0 46 46" aria-hidden="true"><circle cx="23" cy="23" r="19" stroke="#e3f1e9" stroke-width="6" fill="none"/><circle id="heroRing" cx="23" cy="23" r="19" stroke="#2e7d5b" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="0 120" transform="rotate(-90 23 23)"/></svg>
+          <div><small>Holiday fund</small><b>68%</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="band" aria-hidden="true"><div class="band-track">
+    <span>Zero-based budgeting</span><b>✦</b><span>50/30/20 check</span><b>✦</b><span>Debt snowball &amp; avalanche</span><b>✦</b><span>Savings goals</span><b>✦</b><span>Year dashboard</span><b>✦</b><span>Any currency</span><b>✦</b>
+    <span>Zero-based budgeting</span><b>✦</b><span>50/30/20 check</span><b>✦</b><span>Debt snowball &amp; avalanche</span><b>✦</b><span>Savings goals</span><b>✦</b><span>Year dashboard</span><b>✦</b><span>Any currency</span><b>✦</b>
+  </div></div>
+
+  <!-- PROBLEM -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head reveal pre">
+        <p class="eyebrow">Sound familiar?</p>
+        <h2>Payday feels great for about three days.</h2>
+      </div>
+      <div class="split">
+        <article class="pain reveal pre"><span class="q">“Where did it all go?”</span><p>Sorted logs every payment against a category, so <b>the end of the month stops being a mystery.</b></p></article>
+        <article class="pain reveal pre"><span class="q">“Apps want $100 a year.”</span><p>Most budgeting apps charge around that. Sorted is <b>$17 once</b>, and it's your file forever. No bank logins, no ads.</p></article>
+        <article class="pain reveal pre"><span class="q">“I'll never pay this debt off.”</span><p>Add your debts and see the exact month you're free, plus <b>how much interest an extra $50 saves.</b></p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRY IT -->
+  <section id="try" style="background: var(--card); border-block: 1px solid var(--line);">
+    <div class="wrap">
+      <div class="sec-head reveal pre">
+        <p class="eyebrow">Free, right here</p>
+        <h2>Try two of Sorted's tools before you buy.</h2>
+        <p class="lede">These use the same maths as the spreadsheet. Change the numbers and watch them update.</p>
+      </div>
+      <div class="calc">
+        <div class="panel reveal pre">
+          <h3>Split your paycheck</h3>
+          <p>The 50/30/20 rule: half on needs, 30% on wants, 20% on savings and debt.</p>
+          <div class="field">
+            <label for="income">Monthly take-home pay</label>
+            <div class="money-input"><input id="income" inputmode="decimal" value="4,600" autocomplete="off"><span>/mo</span></div>
+          </div>
+          <div class="donut-wrap">
+            <svg class="donut" viewBox="0 0 170 170" aria-hidden="true">
+              <circle cx="85" cy="85" r="64" stroke="#edf2ef"/>
+              <circle id="dNeeds" cx="85" cy="85" r="64" stroke="#2e7d5b" transform="rotate(-90 85 85)"/>
+              <circle id="dWants" cx="85" cy="85" r="64" stroke="#e0a33f" transform="rotate(-90 85 85)"/>
+              <circle id="dSave" cx="85" cy="85" r="64" stroke="#8ccba9" transform="rotate(-90 85 85)"/>
+            </svg>
+            <div class="legend" aria-live="polite">
+              <div><i style="background:#2e7d5b"></i><span>Needs<small>rent, bills, groceries</small></span><b id="lNeeds">2,300</b></div>
+              <div><i style="background:#e0a33f"></i><span>Wants<small>eating out, fun, shopping</small></span><b id="lWants">1,380</b></div>
+              <div><i style="background:#8ccba9"></i><span>Savings &amp; debt<small>future you</small></span><b id="lSave">920</b></div>
+            </div>
+          </div>
+          <div class="result"><small>Saved in a year at 20%</small><b id="yearSave">11,040</b><span>Before any interest. The Year Dashboard tracks this for real.</span></div>
+        </div>
+
+        <div class="panel reveal pre">
+          <h3>Find your debt-free date</h3>
+          <p>Your total debt, the average interest rate, and what you can pay each month.</p>
+          <div class="two">
+            <div class="field"><label for="debt">Total debt</label><div class="money-input"><input id="debt" inputmode="decimal" value="12,000" autocomplete="off"></div></div>
+            <div class="field"><label for="apr">Interest (APR %)</label><div class="money-input"><input id="apr" inputmode="decimal" value="19.9" autocomplete="off"><span>%</span></div></div>
+          </div>
+          <div class="field">
+            <label for="pay">Monthly payment: <span class="mono" id="payOut">400</span></label>
+            <input class="range" id="pay" type="range" min="50" max="2000" step="10" value="400">
+          </div>
+          <div class="result" id="debtResult" aria-live="polite"><small>Debt-free by</small><b id="freeDate">May 2030</b><span id="freeNote">43 months, 3,147 in interest.</span></div>
+          <div class="result" style="background: var(--yellow); margin-top: 10px;"><small>Pay 50 more a month</small><b id="saveMore" style="color: var(--ink)">Save 420</b><span id="saveMoreNote">and finish 5 months sooner.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOUR -->
+  <section id="inside">
+    <div class="wrap">
+      <div class="sec-head reveal pre">
+        <p class="eyebrow">What's inside</p>
+        <h2>Seven tabs. One habit.</h2>
+        <p class="lede">You type in the yellow cells. Everything else calculates itself, with over 6,800 formulas you never have to touch.</p>
+      </div>
+      <div class="tour">
+        <div class="tour-list" role="tablist" aria-label="Planner tabs">
+          <button role="tab" aria-selected="true" aria-controls="p-setup" id="t-setup"><b>Setup</b><span>Income, categories and monthly budgets. Tells you what's left to assign.</span></button>
+          <button role="tab" aria-selected="false" aria-controls="p-tx" id="t-tx"><b>Transactions</b><span>Date, description, pick a category from a dropdown, amount. That's it.</span></button>
+          <button role="tab" aria-selected="false" aria-controls="p-month" id="t-month"><b>This Month</b><span>Budget vs actual for every category, plus your 50/30/20 check.</span></button>
+          <button role="tab" aria-selected="false" aria-controls="p-year" id="t-year"><b>Year Dashboard</b><span>Twelve months of income, spending and saving rate, with charts.</span></button>
+          <button role="tab" aria-selected="false" aria-controls="p-debt" id="t-debt"><b>Debt Payoff</b><span>Snowball or avalanche. Your debt-free date and total interest.</span></button>
+          <button role="tab" aria-selected="false" aria-controls="p-goals" id="t-goals"><b>Savings Goals</b><span>Set a target and a date. See exactly what to save each month.</span></button>
+        </div>
+        <div class="tour-view">
+          <div class="sheet" id="tourSheet">
+            <div class="sheet-bar"><i></i><i></i><i></i><span>Sorted-Budget-Planner.xlsx</span></div>
+            <div class="sheet-body">
+              <div class="pane on" id="p-setup" role="tabpanel" aria-labelledby="t-setup">
+                <div class="sheet-title"><b>Setup</b><span>Budget year 2027</span></div>
+                <div class="kpis">
+                  <div class="kpi"><small>Planned income</small><b>4,600</b></div>
+                  <div class="kpi"><small>Planned out</small><b>4,600</b></div>
+                  <div class="kpi good"><small>Left to assign</small><b>0</b></div>
+                </div>
+                <div class="rows" id="setupRows"><div class="row head"><span>Category</span><span>Group</span><span></span><span class="num">Budget</span></div></div>
+              </div>
+              <div class="pane" id="p-tx" role="tabpanel" aria-labelledby="t-tx">
+                <div class="sheet-title"><b>Transactions</b><span>66 example rows</span></div>
+                <div id="txRows"></div>
+              </div>
+              <div class="pane" id="p-month" role="tabpanel" aria-labelledby="t-month">
+                <div class="sheet-title"><b>This Month</b><span>January ▾</span></div>
+                <div class="kpis">
+                  <div class="kpi"><small>Needs</small><b>53%</b></div>
+                  <div class="kpi"><small>Wants</small><b>7%</b></div>
+                  <div class="kpi good"><small>Saved + debt</small><b>30%</b></div>
+                </div>
+                <div class="rows" id="monthRows"><div class="row head"><span>Category</span><span>Group</span><span>Used</span><span class="num">Left</span></div></div>
+              </div>
+              <div class="pane" id="p-year" role="tabpanel" aria-labelledby="t-year">
+                <div class="sheet-title"><b>Year Dashboard</b><span>2027</span></div>
+                <div class="kpis">
+                  <div class="kpi"><small>Income so far</small><b>13,870</b></div>
+                  <div class="kpi"><small>Saved + debt</small><b>4,035</b></div>
+                  <div class="kpi good"><small>Saving rate</small><b>29%</b></div>
+                </div>
+                <div class="mini-chart" id="yearChart"></div>
+                <div class="months"><span>J</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div>
+              </div>
+              <div class="pane" id="p-debt" role="tabpanel" aria-labelledby="t-debt">
+                <div class="sheet-title"><b>Debt Payoff</b><span>Extra 150 / month</span></div>
+                <div class="kpis">
+                  <div class="kpi good"><small>Debt-free in</small><b>46 months</b></div>
+                  <div class="kpi"><small>Debt-free by</small><b>Oct 2030</b></div>
+                  <div class="kpi"><small>Interest</small><b>3,221</b></div>
+                </div>
+                <div class="rows">
+                  <div class="row head"><span>Debt</span><span>APR</span><span>Balance</span><span class="num">Paid off</span></div>
+                  <div class="row"><span>Credit card</span><span class="grp">22.9%</span><span class="mono">3,200</span><span class="num">Apr 2028</span></div>
+                  <div class="row"><span>Car loan</span><span class="grp">6.5%</span><span class="mono">8,400</span><span class="num">Mar 2029</span></div>
+                  <div class="row"><span>Student loan</span><span class="grp">5.0%</span><span class="mono">14,500</span><span class="num">Oct 2030</span></div>
+                </div>
+                <div class="mini-chart" id="debtChart"></div>
+              </div>
+              <div class="pane" id="p-goals" role="tabpanel" aria-labelledby="t-goals">
+                <div class="sheet-title"><b>Savings Goals</b><span>4 goals</span></div>
+                <div class="goal"><div><span>Emergency fund</span><span class="mono">2,400 / 9,000 · 550/mo</span></div><div class="bar"><i style="--w:27%"></i></div></div>
+                <div class="goal"><div><span>Summer holiday</span><span class="mono">600 / 2,500 · 271/mo</span></div><div class="bar"><i style="--w:24%"></i></div></div>
+                <div class="goal"><div><span>New laptop</span><span class="mono">350 / 1,400 · 210/mo</span></div><div class="bar"><i style="--w:25%"></i></div></div>
+                <div class="goal"><div><span>House deposit</span><span class="mono">4,200 / 30,000 · 717/mo</span></div><div class="bar"><i style="--w:14%"></i></div></div>
+              </div>
+            </div>
+            <div class="tabs-strip" id="tourTabs"><span>Start Here</span><span class="on" data-for="p-setup">Setup</span><span data-for="p-tx">Transactions</span><span data-for="p-month">This Month</span><span data-for="p-year">Year Dashboard</span><span data-for="p-debt">Debt Payoff</span><span data-for="p-goals">Savings Goals</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILM -->
+  <section id="film" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="sec-head reveal pre"><p class="eyebrow">15 seconds</p><h2>See it in action.</h2></div>
+      <div class="film reveal pre" id="filmBox">
+        <video id="filmVideo" src="assets/sorted-ad-landscape.mp4" poster="assets/sorted-ad-poster.jpg" playsinline preload="metadata"></video>
+        <button type="button" id="filmPlay" aria-label="Play the 15-second film"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section style="padding-top: 0;">
+    <div class="wrap">
+      <div class="sec-head reveal pre"><p class="eyebrow">The maths on the maths</p><h2>Cheaper than one month of most apps.</h2></div>
+      <div class="compare">
+        <div class="cmp reveal pre"><span class="eyebrow" style="color: var(--muted)">Typical budgeting app</span><span class="big">~$100<small style="font-size:.4em; color: var(--muted)"> / year</small></span><ul><li>Renews every year</li><li>Wants your bank login</li><li>Your data lives on their servers</li></ul></div>
+        <div class="cmp us reveal pre"><span class="eyebrow">Sorted</span><span class="big">$17<small style="font-size:.4em; color: var(--muted)"> once</small></span><ul><li>Yours to keep, and reuse every year</li><li>No logins, no ads, no tracking</li><li>Works offline in Excel, or in your own Google Drive</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUY -->
+  <section id="buy" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="price reveal pre">
+        <div class="price-l">
+          <p class="eyebrow" style="color: var(--amber)">Everything included</p>
+          <h2>Get Sorted for 2027.</h2>
+          <ul>
+            <li>The 7-tab budget planner (.xlsx) for Excel, Google Sheets and Numbers</li>
+            <li>Filled-in example months to learn from, easy to clear</li>
+            <li>Debt payoff planner for up to 5 debts, snowball or avalanche</li>
+            <li>12 savings goals with automatic monthly targets</li>
+            <li>Works in any currency</li>
+            <li>Free updates for the 2028 edition</li>
+          </ul>
+        </div>
+        <div class="price-r">
+          <span class="was">Launch price · <s>$29</s></span>
+          <span class="amt"><sup>$</sup>17</span>
+          <a href="#buy" class="btn btn-primary buy-link magnetic" id="buyMain">Download Sorted now</a>
+          <small>Secure checkout · instant download link by email<br>30-day no-questions refund</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="padding-top: 0;">
+    <div class="wrap">
+      <div class="sec-head reveal pre"><p class="eyebrow">Questions</p><h2>Before you buy.</h2></div>
+      <div class="faq">
+        <details><summary>Does it work in Google Sheets?</summary><p>Yes. Upload the file to Google Drive and open it with Google Sheets (or use File › Import). Every formula, dropdown and chart works there.</p></details>
+        <details><summary>Do I need to be good with spreadsheets?</summary><p>No. You only type into yellow cells: dates, amounts and a category from a dropdown. The Start Here tab walks you through it in six steps.</p></details>
+        <details><summary>Is this a subscription?</summary><p>No. You pay once and the file is yours. Reuse it every year, or grab the free 2028 update.</p></details>
+        <details><summary>Will it connect to my bank?</summary><p>No, on purpose. You never share a bank login. Logging takes about ten seconds per payment, and doing it by hand is what makes you notice your spending.</p></details>
+        <details><summary>What currency does it use?</summary><p>Any. Amounts have no currency symbol, so it works for dollars, pounds, euros, dirhams, rupees and anything else.</p></details>
+        <details><summary>What if I don't like it?</summary><p>Email us within 30 days and you'll get a full refund.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="logo" style="font-size:1.2rem">Sorted<i>.</i></span>
+    <span>A budget spreadsheet for real people. Not financial advice.</span>
+    <span class="mono" style="font-size:.85rem">© 2026 Sorted</span>
+  </div>
+</footer>
+
+<div class="sticky-buy" id="stickyBuy"><a href="#buy" class="btn btn-primary buy-link">Get Sorted · $17</a></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+/* ===== Store settings: paste your Gumroad / Lemon Squeezy / Etsy product link here ===== */
+const CHECKOUT_URL = '';
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt = (n) => Math.round(n).toLocaleString('en-US');
+const num = (s) => parseFloat(String(s).replace(/[^0-9.]/g, '')) || 0;
+
+/* ---- buy links ---- */
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('on'), 4200); }
+$$('.buy-link').forEach((a) => {
+  if (CHECKOUT_URL) { a.href = CHECKOUT_URL; a.target = '_blank'; a.rel = 'noopener'; return; }
+  if (a.id === 'buyMain') a.addEventListener('click', (e) => { e.preventDefault(); toast('Checkout isn\'t connected yet. Add your store link as CHECKOUT_URL at the top of the page script.'); });
+});
+
+/* ---- example data, taken from the planner's own example month ---- */
+const CATS = [
+  ['Rent / mortgage', 'Needs', 1350, 1350], ['Groceries', 'Needs', 450, 427.14], ['Utilities', 'Needs', 180, 178.77],
+  ['Eating out', 'Wants', 200, 80.42], ['Shopping', 'Wants', 150, 175.98], ['Emergency fund', 'Savings', 500, 500], ['Credit card', 'Debt', 250, 250],
+];
+function rowsInto(el, mode) {
+  CATS.forEach(([n, g, b, a]) => {
+    const r = document.createElement('div'); r.className = 'row';
+    const used = a / b, left = b - a;
+    if (mode === 'setup') r.innerHTML = `<span>${n}</span><span class="grp">${g}</span><span></span><span class="num" style="background:var(--yellow);border-radius:4px;padding:0 4px">${fmt(b)}</span>`;
+    else r.innerHTML = `<span>${n}</span><span class="grp">${g}</span><div class="bar ${used > 1 ? 'over' : ''}"><i data-w="${Math.min(used, 1) * 100}"></i></div><span class="num" style="color:${left < 0 ? 'var(--coral)' : 'inherit'}">${left < 0 ? '−' : ''}${fmt(Math.abs(left))}</span>`;
+    el.appendChild(r);
+  });
+}
+rowsInto($('#heroRows')); rowsInto($('#monthRows')); rowsInto($('#setupRows'), 'setup');
+const TX = [['Jan 01', 'Monthly salary', 'Salary', '4,200.00'], ['Jan 01', 'Rent', 'Rent / mortgage', '1,350.00'], ['Jan 03', 'Electric & water', 'Utilities', '178.77'], ['Jan 04', 'Weekly shop', 'Groceries', '112.40'], ['Jan 08', 'Dinner with friends', 'Eating out', '52.10'], ['Jan 14', 'Freelance logo job', 'Side income', '350.00'], ['Jan 15', 'Credit card payment', 'Credit card', '250.00'], ['Jan 20', 'Clothes', 'Shopping', '175.98']];
+$('#txRows').innerHTML = '<div class="row head" style="grid-template-columns:.9fr 1.4fr 1.1fr .8fr"><span>Date</span><span>Description</span><span>Category ▾</span><span class="num">Amount</span></div>' +
+  TX.map((t) => `<div class="tx"><span class="in">${t[0]}</span><span class="in">${t[1]}</span><span class="in">${t[2]}</span><span class="in num">${t[3]}</span></div>`).join('');
+const YEAR = [[2421, 340, 945, 400], [2427, 322, 945, 400], [2496, 455, 945, 400]];
+$('#yearChart').innerHTML = Array.from({ length: 12 }, (_, i) => {
+  const v = YEAR[i]; if (!v) return '<div></div>';
+  const cols = ['#2e7d5b', '#e0a33f', '#8ccba9', '#e0603f'];
+  return `<div>${v.map((x, k) => `<i style="height:${x / 45}px;background:${cols[k]}"></i>`).join('')}</div>`;
+}).join('');
+$('#debtChart').innerHTML = Array.from({ length: 24 }, (_, i) => { const h = Math.max(0, 100 - i * 4.4); return `<div><i style="height:${h}%;background:${i < 8 ? '#e0603f' : i < 16 ? '#e0a33f' : '#2e7d5b'};opacity:.85"></i></div>`; }).join('');
+
+function fillBars(scope) { $$('.bar i', scope).forEach((b) => { b.style.width = (b.dataset.w ?? parseFloat(getComputedStyle(b).getPropertyValue('--w'))) + '%'; }); }
+
+/* ---- hero: 3D tilt that follows the pointer, floating cards with depth ---- */
+const stage = $('#stage'), hs = $('#heroSheet');
+if (!REDUCED && matchMedia('(hover: hover)').matches) {
+  addEventListener('pointermove', (e) => {
+    const x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
+    hs.style.setProperty('--ry', `${-14 + x * 16}deg`); hs.style.setProperty('--rx', `${8 - y * 10}deg`);
+    $$('.float', stage).forEach((f) => { const d = +f.dataset.depth; f.style.transform = `translate(${x * d}px, ${y * d}px)`; });
+  }, { passive: true });
+}
+
+/* ---- intro + counters ---- */
+function countUp(el) {
+  const to = +el.dataset.to; if (REDUCED || !window.gsap) { el.textContent = fmt(to); return; }
+  const o = { v: 0 }; gsap.to(o, { v: to, duration: 1.6, ease: 'power3.out', onUpdate: () => el.textContent = fmt(o.v) });
+}
+if (window.gsap && !REDUCED) {
+  gsap.from('.hero-copy > *', { y: 40, opacity: 0, duration: 1, ease: 'expo.out', stagger: .08 });
+  gsap.from('#heroSheet', { rotateY: -40, rotateX: 25, y: 80, opacity: 0, duration: 1.6, ease: 'expo.out', delay: .15 });
+  gsap.from('.float', { scale: .6, opacity: 0, duration: 1, ease: 'back.out(1.8)', delay: .9, stagger: .15 });
+}
+setTimeout(() => { $$('#heroSheet .count').forEach(countUp); fillBars($('#heroSheet')); $('#heroRing').setAttribute('stroke-dasharray', `${0.68 * 119.4} 120`); }, REDUCED ? 0 : 700);
+
+/* ---- scroll reveals ---- */
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+$$('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 3) * 0.08 + 's'; io.observe(el); });
+setTimeout(() => $$('.reveal.pre').forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) el.classList.remove('pre'); }), 100);
+
+/* ---- nav state + sticky mobile buy ---- */
+addEventListener('scroll', () => {
+  $('#nav').classList.toggle('scrolled', scrollY > 10);
+  const buy = $('#buy').getBoundingClientRect();
+  $('#stickyBuy').classList.toggle('show', scrollY > innerHeight * 0.8 && (buy.top > innerHeight || buy.bottom < 0));
+}, { passive: true });
+
+/* ---- magnetic buttons ---- */
+if (!REDUCED && matchMedia('(hover: hover)').matches) $$('.magnetic').forEach((b) => {
+  b.addEventListener('pointermove', (e) => { const r = b.getBoundingClientRect(); b.style.setProperty('--mx', (e.clientX - r.left - r.width / 2) * .2 + 'px'); b.style.setProperty('--my', (e.clientY - r.top - r.height / 2) * .3 + 'px'); });
+  b.addEventListener('pointerleave', () => { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); });
+});
+
+/* ---- 50/30/20 calculator ---- */
+const C = 2 * Math.PI * 64;
+function split() {
+  const inc = num($('#income').value);
+  const parts = [[0.5, '#dNeeds', '#lNeeds'], [0.3, '#dWants', '#lWants'], [0.2, '#dSave', '#lSave']];
+  let offset = 0;
+  parts.forEach(([p, d, l]) => {
+    const len = C * p - (inc ? 3 : 0);
+    $(d).setAttribute('stroke-dasharray', `${inc ? Math.max(0, len) : 0} ${C}`);
+    $(d).setAttribute('stroke-dashoffset', -offset); offset += C * p;
+    $(l).textContent = fmt(inc * p);
+  });
+  $('#yearSave').textContent = fmt(inc * 0.2 * 12);
+}
+$('#income').addEventListener('input', split);
+$('#income').addEventListener('blur', (e) => { const v = num(e.target.value); e.target.value = v ? fmt(v) : ''; });
+
+/* ---- debt calculator: same month-by-month method as the Debt Payoff tab ---- */
+function payoff(balance, apr, pay) {
+  let b = balance, m = 0, interest = 0;
+  const r = apr / 100 / 12;
+  while (b > 0.005 && m < 600) { const i = b * r; if (pay <= i) return null; interest += i; b = b + i - Math.min(pay, b + i); m++; }
+  return { months: m, interest };
+}
+function monthLabel(add) { const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() + add); return d.toLocaleString('en-US', { month: 'short', year: 'numeric' }); }
+function debt() {
+  const bal = num($('#debt').value), apr = num($('#apr').value), pay = +$('#pay').value;
+  $('#payOut').textContent = fmt(pay);
+  const res = payoff(bal, apr, pay), box = $('#debtResult');
+  if (!bal) { $('#freeDate').textContent = 'Already!'; $('#freeNote').textContent = 'No debt to pay off.'; box.classList.remove('warn'); return; }
+  if (!res) { box.classList.add('warn'); $('#freeDate').textContent = 'Never'; $('#freeNote').textContent = 'The payment doesn\'t cover the monthly interest. Raise it.'; $('#saveMore').textContent = '–'; $('#saveMoreNote').textContent = ''; return; }
+  box.classList.remove('warn');
+  $('#freeDate').textContent = monthLabel(res.months);
+  $('#freeNote').textContent = `${res.months} months, ${fmt(res.interest)} in interest.`;
+  const more = payoff(bal, apr, pay + 50);
+  $('#saveMore').textContent = 'Save ' + fmt(res.interest - more.interest);
+  const sooner = res.months - more.months;
+  $('#saveMoreNote').textContent = sooner > 0 ? `in interest and finish ${sooner} month${sooner > 1 ? 's' : ''} sooner.` : 'in interest.';
+}
+['#debt', '#apr', '#pay'].forEach((s) => $(s).addEventListener('input', debt));
+$('#debt').addEventListener('blur', (e) => { const v = num(e.target.value); e.target.value = v ? fmt(v) : ''; });
+split(); debt();
+
+/* ---- tab tour ---- */
+const tabs = $$('.tour-list [role=tab]');
+function showTab(btn) {
+  tabs.forEach((t) => t.setAttribute('aria-selected', String(t === btn)));
+  $$('.pane').forEach((p) => p.classList.toggle('on', p.id === btn.getAttribute('aria-controls')));
+  $$('#tourTabs span').forEach((s) => s.classList.toggle('on', s.dataset.for === btn.getAttribute('aria-controls')));
+  const pane = $('#' + btn.getAttribute('aria-controls'));
+  $$('.bar i', pane).forEach((b) => b.style.width = '0');
+  requestAnimationFrame(() => requestAnimationFrame(() => fillBars(pane)));
+}
+tabs.forEach((t, i) => {
+  t.addEventListener('click', () => showTab(t));
+  t.addEventListener('keydown', (e) => { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); const n = tabs[(i + (e.key === 'ArrowDown' ? 1 : tabs.length - 1)) % tabs.length]; n.focus(); showTab(n); } });
+});
+$$('#tourTabs span[data-for]').forEach((s) => s.addEventListener('click', () => showTab($('[aria-controls="' + s.dataset.for + '"]'))));
+const tourIO = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { fillBars($('.pane.on')); tourIO.disconnect(); } }));
+tourIO.observe($('#tourSheet'));
+
+/* ---- film ---- */
+$('#filmPlay').addEventListener('click', () => { const v = $('#filmVideo'); v.play().then(() => $('#filmBox').classList.add('playing')).catch(() => {}); v.controls = true; });
+$('#filmVideo').addEventListener('error', () => { $('#filmBox').style.display = 'none'; });
+</script>
+</body>
+</html>

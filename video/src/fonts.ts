@@ -7,6 +7,9 @@ const FACES: [string, string, string, string][] = [
   ['Instrument Serif', 'InstrumentSerif-Italic.woff2', '400', 'italic'],
   ['Hanken', 'Hanken-500.woff2', '400 600', 'normal'],
   ['Plex Mono', 'PlexMono-500.woff2', '400 500', 'normal'],
+  ['Bricolage', 'Bricolage-800.woff2', '700 800', 'normal'],
+  ['Figtree', 'Figtree-600.woff2', '400 700', 'normal'],
+  ['JetBrains', 'JetBrainsMono-600.woff2', '400 700', 'normal'],
 ];
 
 if (typeof document !== 'undefined') {

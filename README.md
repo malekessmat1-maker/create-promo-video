@@ -47,6 +47,25 @@ You get full control over the output. The skill sets up a local Remotion Studio 
 
 
 
+## Showcase: Sorted (a real product you can sell from home)
+
+`sorted/` is a complete, low-cost online business made with this repo: a digital budget-planner spreadsheet, its sales website, a 15-second ad, and a launch plan.
+
+| Folder | What's in it |
+|---|---|
+| `sorted/product/Sorted-Budget-Planner.xlsx` | **The product.** 7 tabs (Start Here, Setup, Transactions, This Month, Year Dashboard, Debt Payoff, Savings Goals). 6,880 formulas with zero errors, dropdowns and charts. Works in Excel, Google Sheets and Numbers, in any currency. |
+| `sorted/scripts/build_planner.py` | Rebuilds the spreadsheet. Change `YEAR`, categories or colours and re-run it. |
+| `sorted/site/` | The sales page: an animated 3D spreadsheet preview, a working 50/30/20 calculator, a debt-free-date calculator, a tour of the tabs, pricing and FAQ. Paste your checkout link into `CHECKOUT_URL`. |
+| `ads/sorted-ad-*.mp4` | The ad in 16:9 and 9:16, 15 s with an original soundtrack. Source in `video/src/sorted/`. Compositions `SortedLandscape` and `SortedPortrait`. |
+| `sorted/marketing/` | Listing and pin images taken from the ad. |
+| `sorted/LAUNCH-PLAN.md` | Startup costs (under $20), profit per sale on each platform, a ready-to-paste Etsy listing, and a 4-week marketing plan. |
+
+```bash
+python3 sorted/scripts/build_planner.py sorted/product/Sorted-Budget-Planner.xlsx   # rebuild the product
+npx http-server sorted/site -p 4174                                                   # preview the store
+cd video && npx remotion render src/index.ts SortedPortrait out/sorted-ad-portrait.mp4  # re-render the ad
+```
+
 ## Showcase: HADAL (website + ad made with this repo)
 
 `site/` and `video/` hold a complete example: a made-up deep-sea expedition brand called **HADAL**, with a 3D website and a 20-second ad built from the same 3D assets.
